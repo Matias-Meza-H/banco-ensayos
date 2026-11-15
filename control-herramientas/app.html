@@ -1,0 +1,1055 @@
+<title>Control de Herramientas · APAS Chile</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: banda de marca + navegación por pestañas, contenido a 1320px; misma familia visual que la Plataforma de Calidad */
+:root{--bg:#f4f6f9;--card:#fff;--ink:#17202b;--muted:#5e6a79;--line:#e1e6ec;--accent:#173f66;--accent2:#2f6fa8;--soft:#e8f0f8;--brand:#173f66;--brand2:#102f4d;--onbrand:#fff;
+--ok:#1e7d4f;--ok-bg:#e3f4ea;--warn:#8a6d00;--warn-bg:#fbf3d4;--soon:#a5480b;--soon-bg:#fde8d6;--bad:#b42318;--bad-bg:#fde4e2;--na:#7a8594;--na-bg:#eef0f3;
+--hl:#fff1a8;--hl-ink:#6b5300;--int:#2f6fa8;--ext:#7a4bb0;--none:#9aa5b4;--shadow:0 20px 60px rgba(10,20,35,.28)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#11151b;--card:#1a2029;--ink:#e6eaf0;--muted:#9aa5b4;--line:#2b333f;--accent:#8fbbe6;--accent2:#6aa3db;--soft:#1e2b3b;--brand:#14304d;--brand2:#0d2238;--onbrand:#eef4fa;
+--ok:#5fd29a;--ok-bg:#163527;--warn:#e8c94f;--warn-bg:#3a3214;--soon:#f5a36a;--soon-bg:#3d2414;--bad:#ff8a80;--bad-bg:#3f1c1a;--na:#8d97a5;--na-bg:#252c36;
+--hl:#4a3f10;--hl-ink:#f3dc79;--int:#6aa3db;--ext:#b994e6;--none:#6c7685;--shadow:0 20px 60px rgba(0,0,0,.55);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#11151b;--card:#1a2029;--ink:#e6eaf0;--muted:#9aa5b4;--line:#2b333f;--accent:#8fbbe6;--accent2:#6aa3db;--soft:#1e2b3b;--brand:#14304d;--brand2:#0d2238;--onbrand:#eef4fa;
+--ok:#5fd29a;--ok-bg:#163527;--warn:#e8c94f;--warn-bg:#3a3214;--soon:#f5a36a;--soon-bg:#3d2414;--bad:#ff8a80;--bad-bg:#3f1c1a;--na:#8d97a5;--na-bg:#252c36;
+--hl:#4a3f10;--hl-ink:#f3dc79;--int:#6aa3db;--ext:#b994e6;--none:#6c7685;--shadow:0 20px 60px rgba(0,0,0,.55);color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;font:14px/1.45 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--ink)}
+.pad{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header{background:var(--brand);color:var(--onbrand);padding-block:14px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+header h1{margin:0;font-size:19px;font-weight:650;text-wrap:balance}
+header p{margin:2px 0 0;font-size:12.5px;opacity:.85}
+.hlogo{height:40px;background:#fff;border-radius:8px;padding:4px 8px}
+.who{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap;font-size:12px}
+.who span{background:rgba(255,255,255,.15);padding:4px 10px;border-radius:999px}
+nav.views{background:var(--brand2);display:flex;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav.views a{padding:10px 16px;color:#c9d8e8;text-decoration:none;font-weight:600;font-size:13.5px;border-radius:8px 8px 0 0;white-space:nowrap;margin-top:6px}
+nav.views a.on{background:var(--bg);color:var(--accent)}
+nav.views a:focus-visible,.btn:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--accent2);outline-offset:2px}
+main{max-width:1320px;margin:0 auto;padding-block:18px 40px}
+h2.sec{font-size:12.5px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);margin:22px 0 8px;font-weight:650}
+.hint{font-size:12.5px;color:var(--muted);margin:0 0 10px}
+.hero{background:linear-gradient(135deg,var(--brand),#2f6fa8);color:#fff;border-radius:16px;padding:22px 24px;display:flex;flex-wrap:wrap;gap:20px;align-items:flex-end}
+.hero-t{flex:1 1 260px;min-width:0}.hero h2{margin:4px 0 6px;font-size:24px;text-wrap:balance}.hero p{margin:0;opacity:.88;font-size:13px}
+.eyebrow{font-size:11.5px;letter-spacing:.8px;text-transform:uppercase;opacity:.85}
+.hero-n{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;flex:2 1 560px;min-width:0}
+.hero-n button{background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:12px 14px;text-align:left;color:#fff;font:inherit;cursor:pointer}
+.hero-n button:hover{background:rgba(255,255,255,.22)}
+.hero-n b{display:block;font-size:30px;font-variant-numeric:tabular-nums;line-height:1.15}.hero-n span{font-size:12px;opacity:.92}
+.hero-n small{display:block;font-size:11.5px;opacity:.85;margin-top:3px}
+@media (max-width:760px){.hero-n{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,380px),1fr));gap:12px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px 16px;min-width:0}
+.box h3{margin:0 0 4px;font-size:14.5px}
+.box .sub{font-size:12px;color:var(--muted);margin-bottom:10px}
+.big{font-size:28px;font-weight:700;font-variant-numeric:tabular-nums}
+.stack{display:flex;height:24px;border-radius:8px;overflow:hidden;margin:6px 0 10px;background:var(--na-bg)}
+.stack i{display:block;height:100%;cursor:pointer;min-width:3px}.stack i:hover{filter:brightness(1.12)}
+.rows{display:flex;flex-direction:column;gap:2px}
+.rowb{display:grid;grid-template-columns:14px 1fr auto auto;gap:8px;align-items:center;padding:6px 8px;border-radius:8px;cursor:pointer;border:none;background:none;font:inherit;color:inherit;text-align:left;width:100%}
+.rowb:hover{background:var(--soft)}
+.rowb b{font-variant-numeric:tabular-nums;min-width:38px;text-align:right}.rowb small{color:var(--muted);font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
+.sw{width:12px;height:12px;border-radius:3px;display:inline-block}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.kpi{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--c,var(--line));border-radius:10px;padding:10px 14px;text-align:left;color:inherit;font:inherit;cursor:pointer}
+.kpi:hover{border-color:var(--accent2);border-left-color:var(--c,var(--accent2))}
+.kpi b{display:block;font-size:24px;font-variant-numeric:tabular-nums;line-height:1.2}.kpi span{font-size:12px;color:var(--muted)}
+/* toolbar + table */
+.toolbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+input,select,textarea{font:inherit;padding:7px 10px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);max-width:100%}
+.toolbar input[type=search]{flex:1 1 260px;min-width:0}
+.count{color:var(--muted);font-size:12.5px;margin-left:auto}
+.wrap{overflow:auto;border-radius:12px;border:1px solid var(--line);background:var(--card);max-height:calc(100vh - 230px);min-height:260px}
+table{width:100%;border-collapse:collapse}
+th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{position:sticky;top:0;background:var(--card);z-index:2;font-size:12px;color:var(--muted);font-weight:650;white-space:nowrap}
+thead tr.f th{top:33px;padding:4px 6px;z-index:2;box-shadow:0 1px 0 var(--line)}
+thead tr.f input,thead tr.f select{width:100%;min-width:70px;font-size:12px;padding:4px 6px;border-radius:6px;background:var(--bg)}
+thead th.s{cursor:pointer;user-select:none}thead th.s:hover{color:var(--accent)}
+thead th .ar{color:var(--accent2)}
+tbody tr{cursor:pointer}tbody tr:hover td{background:var(--soft)}
+tbody tr.hl td{background:var(--hl)}tbody tr.hl:hover td{filter:brightness(.97)}
+td{font-size:13px}
+td.mono,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px}
+td.nw{white-space:nowrap}td.num{text-align:right;font-variant-numeric:tabular-nums}
+td small{display:block;color:var(--muted);font-size:11.5px}
+.ri{display:inline-block;font-size:11px;font-weight:700;color:var(--hl-ink);margin-top:2px}
+.b{display:inline-block;padding:2px 8px;border-radius:999px;font-size:11.5px;font-weight:700;white-space:nowrap;font-variant-numeric:tabular-nums}
+.s-ok{background:var(--ok-bg);color:var(--ok)}.s-warn{background:var(--warn-bg);color:var(--warn)}.s-soon{background:var(--soon-bg);color:var(--soon)}.s-bad{background:var(--bad-bg);color:var(--bad)}.s-na{background:var(--na-bg);color:var(--na)}.s-info{background:var(--soft);color:var(--accent)}
+.more{display:block;margin:10px auto 0}
+.btn{font:inherit;font-size:13px;padding:7px 12px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;cursor:pointer;white-space:nowrap}
+.btn:hover{border-color:var(--accent2)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--card);font-weight:650}
+.btn.danger{background:var(--bad);border-color:var(--bad);color:var(--card);font-weight:650}
+.btn.sm{font-size:12px;padding:4px 9px}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.empty{color:var(--muted);font-style:italic;padding:16px}
+.msg{background:var(--soft);color:var(--accent);border-radius:8px;padding:8px 12px;margin-bottom:10px;font-size:13px}
+.msg.err{background:var(--bad-bg);color:var(--bad)}
+details.colpick{position:relative}
+details.colpick summary{list-style:none}
+details.colpick summary::-webkit-details-marker{display:none}
+details.colpick .menu{position:absolute;right:0;top:calc(100% + 4px);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;z-index:5;box-shadow:var(--shadow);display:grid;gap:2px;min-width:200px}
+.menu label,.chk{display:flex;gap:7px;align-items:center;font-size:13px;cursor:pointer;padding:2px 0}
+/* drawer */
+.overlay{position:fixed;inset:0;background:rgba(10,15,25,.48);display:flex;justify-content:flex-end;z-index:30}
+.panel{width:min(860px,100%);height:100%;overflow-y:auto;background:var(--bg);padding-bottom:env(safe-area-inset-bottom,0px)}
+.phead{position:sticky;top:0;z-index:3;background:var(--card);border-bottom:1px solid var(--line);padding:14px 18px;display:flex;gap:12px;align-items:flex-start}
+.phead h2{margin:0;font-size:19px;text-wrap:balance}.phead .sub{color:var(--muted);font-size:13px;margin-top:3px}
+.x{margin-left:auto;font:inherit;font-size:20px;line-height:1;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:8px;width:34px;height:34px;cursor:pointer;flex:none}
+.pbody{padding:14px 18px 30px;display:flex;flex-direction:column;gap:12px}
+.pbody .box h3{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px 18px}
+.f{min-width:0}.f span{display:block;font-size:11.5px;color:var(--muted)}.f b{font-weight:560;overflow-wrap:anywhere}
+.f input,.f select,.f textarea{width:100%;font-size:13px;padding:6px 8px}
+.toprow{display:grid;grid-template-columns:200px 1fr;gap:12px}
+@media (max-width:620px){.toprow{grid-template-columns:1fr}}
+.photo{border:2px dashed var(--line);border-radius:12px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);font-size:12px;text-align:center;padding:10px;background:var(--card);max-width:100%}
+.photo svg{width:44px;height:44px;opacity:.6;margin-bottom:6px}
+.cust{display:flex;flex-direction:column;gap:8px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--card)}
+.seg button{font:inherit;font-weight:650;font-size:13px;border:none;background:none;padding:8px 14px;cursor:pointer;color:var(--muted)}
+.seg button.on{background:var(--accent);color:var(--card)}
+.seg button:disabled{cursor:not-allowed}
+.relrow{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+.relrow:first-child{border-top:none}
+.rt{font-size:11px;font-weight:750;padding:3px 8px;border-radius:6px;white-space:nowrap;text-transform:uppercase;letter-spacing:.3px}
+.rt-full{background:var(--ok-bg);color:var(--ok)}.rt-oneway{background:var(--soft);color:var(--accent)}.rt-superseded{background:var(--warn-bg);color:var(--warn)}.rt-replaced{background:var(--bad-bg);color:var(--bad)}
+.relform{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:10px;padding:10px;border:1px dashed var(--line);border-radius:10px}
+.relform input{flex:1 1 140px;min-width:0}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:8px;font-size:12px;color:var(--muted);margin-top:10px}
+.legend div{display:flex;flex-direction:column;gap:3px}
+.hist{font-size:12px;color:var(--muted);border-left:2px solid var(--line);padding:3px 10px;margin:6px 0;line-height:1.5}
+.hist b{color:var(--ink);font-weight:600}
+.mini{width:100%;font-size:12.5px}.mini td,.mini th{padding:5px 6px}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(10,15,25,.55);z-index:60;display:flex;align-items:center;justify-content:center;padding:16px}
+.mbox{background:var(--card);border-radius:14px;width:min(640px,100%);max-height:92vh;overflow:auto;box-shadow:var(--shadow);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.mbox h3{margin:0;font-size:17px;text-wrap:balance}
+.alert{border-radius:10px;padding:10px 12px;font-size:13px;line-height:1.5}
+.alert.bad{background:var(--bad-bg);color:var(--bad)}.alert.ok{background:var(--ok-bg);color:var(--ok)}.alert.warn{background:var(--warn-bg);color:var(--warn)}
+.mact{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+/* builder */
+.bgrid{display:grid;grid-template-columns:340px minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:980px){.bgrid{grid-template-columns:1fr}}
+.bside{display:flex;flex-direction:column;gap:10px}
+.bside .box h3{font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:12.5px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 11px;cursor:pointer}
+.chip:hover{border-color:var(--accent2)}
+.chip.on{background:var(--accent);border-color:var(--accent);color:var(--card)}
+.chip small{opacity:.75;margin-left:4px;font-variant-numeric:tabular-nums}
+.cgroup{font-size:11.5px;color:var(--muted);margin:8px 0 4px;font-weight:650}
+.colgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+tr.ex td{opacity:.45}
+/* gantt */
+.gwrap{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.gscroll{max-height:calc(100vh - 260px);overflow:auto}
+.ghead,.grow{display:grid;grid-template-columns:minmax(150px,320px) minmax(0,1fr) 74px}
+.ghead{position:sticky;top:0;z-index:2;background:var(--card);border-bottom:1px solid var(--line);font-size:11.5px;color:var(--muted)}
+.ghead>div{padding:8px 10px}
+.gaxis{position:relative;height:34px;padding:0!important}
+.gaxis span{position:absolute;top:0;bottom:0;border-left:1px solid var(--line);padding:9px 6px 0;white-space:nowrap;font-weight:650}
+.grow{border-bottom:1px solid var(--line);cursor:pointer;min-height:36px}
+.grow:hover{background:var(--soft)}
+.glab{padding:6px 10px;font-size:12.5px;min-width:0;overflow:hidden}
+.glab b{font-weight:650}.glab small{display:block;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gtrack{position:relative;min-width:0}
+.gtrack .grid-l{position:absolute;top:0;bottom:0;border-left:1px dashed var(--line)}
+.gtrack .today{position:absolute;top:0;bottom:0;border-left:2px solid var(--accent2);z-index:1}
+.bar{position:absolute;top:10px;height:16px;border-radius:5px;background:var(--c);opacity:.9}
+.bar.out{background:repeating-linear-gradient(45deg,var(--c) 0 6px,transparent 6px 10px);border:1px solid var(--c)}
+.due{position:absolute;top:6px;width:4px;height:24px;border-radius:2px;background:var(--c);margin-left:-2px}
+.gdays{padding:8px 10px;text-align:right;font-variant-numeric:tabular-nums;font-size:12.5px;font-weight:700}
+.mstrip{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px;margin-bottom:10px}
+@media (max-width:620px){.ghead,.grow{grid-template-columns:120px minmax(0,1fr) 54px}}
+footer{max-width:1320px;margin:0 auto;padding-block:0 30px;color:var(--muted);font-size:12px}
+@media (prefers-reduced-motion: reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<header class="pad">
+  <img class="hlogo" src="__LOGO__" alt="APAS Chile">
+  <div><h1>Control de Herramientas</h1><p>Gerencia de Calidad · Herramientas y equipos calibrables y no calibrables</p></div>
+  <div class="who" id="who"><span id="whoRole">Cargando…</span><span id="whoSync" hidden></span></div>
+</header>
+<nav class="views pad" id="nav">
+  <a href="#dashboard" data-v="dashboard">Estatus</a>
+  <a href="#calibrables" data-v="calibrables">Calibrables</a>
+  <a href="#no-calibrables" data-v="no-calibrables">No calibrables</a>
+  <a href="#archivos" data-v="archivos">Fabricación de archivos</a>
+  <a href="#vencimientos" data-v="vencimientos">Vencimientos (Gantt)</a>
+</nav>
+<main class="pad" id="v-dashboard"></main>
+<main class="pad" id="v-calibrables" hidden></main>
+<main class="pad" id="v-no-calibrables" hidden></main>
+<main class="pad" id="v-archivos" hidden></main>
+<main class="pad" id="v-vencimientos" hidden></main>
+<footer class="pad" id="foot"></footer>
+<div id="ovHost"></div>
+<div id="modalHost"></div>
+
+<script>
+const D = __DATA__;
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const normPN = s => String(s || '').toUpperCase().replace(/\s+/g, '');
+const pad2 = n => String(n).padStart(2, '0');
+const isoOf = dt => `${dt.getFullYear()}-${pad2(dt.getMonth() + 1)}-${pad2(dt.getDate())}`;
+const TODAY = (() => { const t = new Date(); return new Date(t.getFullYear(), t.getMonth(), t.getDate()); })();
+const HOY = isoOf(TODAY);
+const parseD = s => { if (!s || !/^\d{4}-\d{2}-\d{2}$/.test(s)) return null; const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d); };
+const daysTo = s => { const d = parseD(s); return d ? Math.round((d - TODAY) / 86400000) : null; };
+const fmt = s => { const d = parseD(s); return d ? `${pad2(d.getDate())}-${pad2(d.getMonth() + 1)}-${d.getFullYear()}` : (s || ''); };
+const MES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+const addMonths = (d, m) => new Date(d.getFullYear(), d.getMonth() + m, d.getDate());
+const dayCls = n => n == null ? 'na' : n < 0 ? 'bad' : n <= 30 ? 'soon' : n <= 90 ? 'warn' : 'ok';
+const dayTxt = n => n == null ? 'Sin fecha' : n < 0 ? `Vencida (${n})` : `${n} d`;
+const COLORS = {ok:'var(--ok)', warn:'var(--warn)', soon:'var(--soon)', bad:'var(--bad)', na:'var(--na)'};
+
+// ================= runtime =================
+const RT = {db:null, user:null, dl:null, canWrite:false, uid:null, ready:false, loaded:false, err:null};
+const EDITS = new Map();  // k -> overrides
+const RELDB = new Map();  // rel id -> doc
+const NAMES = new Map();  // uid -> name
+
+// ================= derived data =================
+const CUST_OPTS = ['En APAS', 'En calibración'];
+const COND_OPTS = ['', 'Rota / dañada', 'En reparación', 'Perdida', 'Scrap'];
+const COND_TXT = c => c || 'Sin novedad';
+const APL_OPTS = ['A320', 'A330', 'B737', 'B767', 'B787'];
+const REL_TYPES = {
+  full: {h:'Full int.', d:'Funciona al 100% en ambos sentidos.'},
+  oneway: {h:'One way', d:'Una herramienta (superior, más moderna o kit) reemplaza a la otra, pero no al revés.'},
+  superseded: {h:'Superseded', d:'La antigua sigue sirviendo, pero existe una más moderna que es preferible.'},
+  replaced: {h:'Replace by', d:'La nueva siempre se prefiere; no se recomienda usar la versión anterior.'}
+};
+const locName = loc => { const m = String(loc || '').toUpperCase().match(/\b(NSVDF-\d+|NSV-\d+|NSVDF-PISO|NSVDF-EXT)\b/); return m && D.locmap[m[1]] ? D.locmap[m[1]] : ''; };
+function locCat(t){
+  t = t.toUpperCase();
+  if (/MISSING|EXTRAVIAD/.test(t)) return 'Perdida';
+  if (/SCRAP/.test(t)) return 'Scrap';
+  if (/CALIBRAC|METROCAL|\bSMI\b|CALMANREP|\/DTS/.test(t)) return 'Calibración';
+  if (/HANGAR|HAGAR|\bH50\b|\bH83\b|\bH84\b|CHECK C|LOSA|CARRO ADA|PATIO|APOYO TERRESTRE|\bGSE\b/.test(t)) return 'Hangar / aeronave';
+  if (/INST|KIT DE|KIT MANOMETRO/.test(t)) return 'Instalado en equipo';
+  if (/TALLER|^T\.|^T |NDT|MOTORES|ESTRUCTURA|TORNO|CUARTO|BANCO|BCO|STAND|BENCH|INGENIERIA|M\.MAYOR|HIDROTEST/.test(t)) return 'Taller';
+  if (/ALMA|DEPOSITO|^DF|HTA|HTADF|HATDF|HTDF|COM-|ST-|INCOMING|CONTAINER|NSV|REFRIGERADOR|CONDF|INS-PISO/.test(t)) return 'Almacén / pañol';
+  return t.trim() ? 'Otra' : 'Sin ubicación';
+}
+const calType = it => { const p = (it.by || it.lastBy || '').toUpperCase(); return it.ctype || (/INTERNAL|INTERNO|^APAS|TALLER/.test(p) ? 'Interna' : p ? 'Externa' : 'Sin proveedor'); };
+const seedCust = loc => /CALIBRAC|METROCAL|\bSMI\b|CALMANREP|\/DTS/i.test(loc || '') ? 'En calibración' : 'En APAS';
+const seedCond = loc => /MISSING|EXTRAVIAD/i.test(loc || '') ? 'Perdida' : /SCRAP/i.test(loc || '') ? 'Scrap' : '';
+function aplOf(it){
+  const s = new Set(String(it.apl || '').split(/[,;]+/).map(x => x.trim()).filter(Boolean));
+  const f = String(it.fam || '').toUpperCase();
+  if (/320/.test(f)) s.add('A320'); else if (/AIRBUS/.test(f)) s.add('Airbus');
+  return [...s];
+}
+let CAL = [], NC = [], BYK = new Map();
+function derive(base, kind){
+  const it = Object.assign({}, base, EDITS.get(base.k) || {});
+  it._kind = kind; it._pnN = normPN(it.pn);
+  it._locName = locName(it.loc);
+  it._cat = locCat(`${it.loc || ''} ${it._locName}`);
+  it._cond = it.cond != null ? it.cond : seedCond(it.loc);
+  it._apl = aplOf(it);
+  if (kind === 'cal'){
+    it.st = it.st || 'SIN DATO';
+    it._days = daysTo(it.next); it._ctype = calType(it);
+    it._cust = it.cust || seedCust(it.loc);
+  }
+  it._txt = [it.id, it.pn, it.sn, it.desc, it.oem, it.mfr, it.loc, it._locName, it.ach, it.asset, it.cert, it.by, it.alt, it.notes, it.acft].join(' ').toLowerCase();
+  return it;
+}
+function rebuild(){
+  CAL = D.cal.map(b => derive(b, 'cal'));
+  NC = D.nc.map(b => derive(b, 'nc'));
+  BYK = new Map([...CAL, ...NC].map(i => [i.k, i]));
+}
+
+// ================= interchange relations (by P/N) =================
+const relId = (a, b) => { const s = [a, b].sort().join('|'); let h = 5381; for (let i = 0; i < s.length; i++) h = ((h << 5) + h + s.charCodeAt(i)) >>> 0; return 'r' + h.toString(36) + s.length.toString(36); };
+let REL = new Map(); // pnN -> [{o, t, role, id, src}]
+function buildRels(){
+  const all = new Map();
+  D.rels.forEach(r => all.set(relId(r.a, r.b), {...r, id: relId(r.a, r.b)}));
+  RELDB.forEach((r, id) => { if (r.deleted) all.delete(id); else all.set(id, {...r, id}); });
+  REL = new Map();
+  const put = (p, x) => { if (!REL.has(p)) REL.set(p, []); REL.get(p).push(x); };
+  all.forEach(r => { put(r.a, {o:r.b, t:r.t, role:'a', id:r.id, src:r.src, note:r.note}); put(r.b, {o:r.a, t:r.t, role:'b', id:r.id, src:r.src, note:r.note}); });
+}
+function relLabel(t, role){
+  if (t === 'full') return 'Full intercambiable con';
+  if (t === 'oneway') return role === 'a' ? 'One way · esta reemplaza a' : 'One way · puede ser reemplazada por';
+  if (t === 'superseded') return role === 'a' ? 'Supersede a (esta es la preferida)' : 'Superseded por (preferir la otra)';
+  if (t === 'replaced') return role === 'a' ? 'Reemplaza a (la otra no se recomienda)' : 'Replace by (no usar esta versión)';
+  return t;
+}
+// P/N that can do the job of `pn`
+function substitutes(pn){
+  return (REL.get(pn) || []).filter(r => r.t === 'full' || r.t === 'superseded' || ((r.t === 'oneway' || r.t === 'replaced') && r.role === 'b')).map(r => r.o);
+}
+const relsSummary = it => (REL.get(it._pnN) || []).map(r => `${REL_TYPES[r.t]?.h || r.t}: ${r.o}`).join('; ');
+const available = u => u.st === 'SERV' && u._cust === 'En APAS' && (u._days == null || u._days >= 0) && u._cond !== 'Perdida' && u._cond !== 'Scrap' && u._cond !== 'Rota / dañada';
+function categoryUnits(it){
+  const pns = new Set([it._pnN, ...substitutes(it._pnN)]);
+  return CAL.filter(u => u._pnN && pns.has(u._pnN));
+}
+
+// ================= routing =================
+const VIEWS = ['dashboard', 'calibrables', 'no-calibrables', 'archivos', 'vencimientos'];
+let curView = null;
+function route(){
+  const v = VIEWS.includes(location.hash.slice(1)) ? location.hash.slice(1) : 'dashboard';
+  curView = v;
+  VIEWS.forEach(x => { $('#v-' + x).hidden = x !== v; });
+  document.querySelectorAll('#nav a').forEach(a => a.classList.toggle('on', a.dataset.v === v));
+  renderView(v);
+}
+function go(v){ if (location.hash.slice(1) === v) route(); else location.hash = v; }
+window.addEventListener('hashchange', route);
+function renderView(v){
+  if (v === 'dashboard') renderDash();
+  else if (v === 'calibrables') LISTS.cal.render();
+  else if (v === 'no-calibrables') LISTS.nc.render();
+  else if (v === 'archivos') renderBuilder();
+  else if (v === 'vencimientos') renderGantt();
+}
+function refreshAll(){ rebuild(); buildRels(); if (curView) renderView(curView); if (OPEN.k) renderFicha(); }
+
+// ================= DASHBOARD =================
+function renderDash(){
+  const el = $('#v-dashboard');
+  const C = CAL.filter(i => i.prog === 'Calibración'), MP = CAL.filter(i => i.prog !== 'Calibración');
+  const serv = C.filter(i => i.st === 'SERV'), ns = C.filter(i => i.st === 'NO SERV');
+  const nsBy = t => ns.filter(i => i._ctype === t).length;
+  const ven = serv.filter(i => i._days != null && i._days < 0), v30 = serv.filter(i => i._days != null && i._days >= 0 && i._days <= 30);
+  const v90 = serv.filter(i => i._days != null && i._days > 30 && i._days <= 90), v180 = serv.filter(i => i._days != null && i._days > 90 && i._days <= 180);
+  const vmas = serv.filter(i => i._days != null && i._days > 180), vsin = serv.filter(i => i._days == null);
+  const enCal = C.filter(i => i._cust === 'En calibración');
+  const nsCat = {}; ns.forEach(i => { nsCat[i._cat] = (nsCat[i._cat] || 0) + 1; });
+  const pct = (a, b) => b ? Math.round(a * 100 / b) + '%' : '—';
+  const nsTypes = [['Interna', 'var(--int)', 'Taller de calibración APAS (Internal Workshop)'], ['Externa', 'var(--ext)', 'Laboratorio o proveedor externo'], ['Sin proveedor', 'var(--none)', 'Sin dato de quién calibra']];
+  const vRows = [['Vencidas', ven, 'bad', 'venc'], ['Vencen en ≤ 30 días', v30, 'soon', '30'], ['31 a 90 días', v90, 'warn', '90'], ['91 a 180 días', v180, 'ok', '180'], ['Más de 180 días', vmas, 'ok', '181'], ['Sin fecha de vencimiento', vsin, 'na', 'none']];
+  const provs = {}; C.forEach(i => { const p = (i.by || i.lastBy || '(sin dato)').toUpperCase().replace(/\s+/g, ' ').replace(/^A\.V\.C\./, 'AVC').replace(/ LABORATORY.*$/, ' LABORATORY'); const o = provs[p] || (provs[p] = {n:0, ns:0, v:0}); o.n++; if (i.st === 'NO SERV') o.ns++; if (i.st === 'SERV' && i._days != null && i._days < 0) o.v++; });
+  const provTop = Object.entries(provs).sort((a, b) => b[1].n - a[1].n).slice(0, 10);
+  const ncUnits = NC.reduce((s, i) => s + (parseInt(i.qty) || 1), 0);
+  const ncLost = NC.filter(i => i._cond === 'Perdida').length, ncScrap = NC.filter(i => i._cond === 'Scrap' || i._cond === 'Rota / dañada').length;
+  const ncAlt = NC.filter(i => REL.has(i._pnN)).length;
+  el.innerHTML = `
+  <section class="hero">
+    <div class="hero-t"><div class="eyebrow">Estatus al ${fmt(HOY)}</div><h2>Herramientas y equipos calibrables</h2><p>${C.length} registros del programa de calibración${MP.length ? ` y ${MP.length} de mantención preventiva` : ''}. Cada número abre el listado filtrado.</p></div>
+    <div class="hero-n">
+      <button data-go="cal:">${''}<b>${C.length}</b><span>Calibrables totales</span><small>${serv.length} servibles · ${pct(serv.length, C.length)}</small></button>
+      <button data-go="cal:st=NO SERV"><b>${ns.length}</b><span>No servibles</span><small>${pct(ns.length, C.length)} del total</small></button>
+      <button data-go="cal:st=NO SERV&_ctype=Interna"><b>${nsBy('Interna')}</b><span>No servibles · calibración interna</span><small>Taller APAS</small></button>
+      <button data-go="cal:st=NO SERV&_ctype=Externa"><b>${nsBy('Externa')}</b><span>No servibles · calibración externa</span><small>${nsBy('Sin proveedor')} sin proveedor registrado</small></button>
+    </div>
+  </section>
+  <div class="cols" style="margin-top:12px">
+    <div class="box"><h3>No servibles según quién calibra</h3><div class="sub">${ns.length} herramientas con estado NO SERV.</div>
+      <div class="stack">${nsTypes.map(([t, c]) => `<i style="width:${nsBy(t) * 100 / Math.max(ns.length, 1)}%;background:${c}" data-go="cal:st=NO SERV&_ctype=${t}" title="${t}: ${nsBy(t)}"></i>`).join('')}</div>
+      <div class="rows">${nsTypes.map(([t, c, d]) => `<button class="rowb" data-go="cal:st=NO SERV&_ctype=${t}"><i class="sw" style="background:${c}"></i><span>${t}<small style="display:block;text-align:left">${d}</small></span><b>${nsBy(t)}</b><small>${pct(nsBy(t), ns.length)}</small></button>`).join('')}</div>
+    </div>
+    <div class="box"><h3>No servibles por ubicación</h3><div class="sub">Dónde están hoy las ${ns.length} herramientas no servibles.</div>
+      <div class="rows">${Object.entries(nsCat).sort((a, b) => b[1] - a[1]).map(([c, n]) => `<button class="rowb" data-go="cal:st=NO SERV&_cat=${c}"><i class="sw" style="background:${c === 'Perdida' || c === 'Scrap' ? 'var(--bad)' : c === 'Calibración' ? 'var(--warn)' : 'var(--accent2)'}"></i><span>${esc(c)}</span><b>${n}</b><small>${pct(n, ns.length)}</small></button>`).join('')}</div>
+    </div>
+  </div>
+  <h2 class="sec">Vencimiento de calibración de las ${serv.length} servibles</h2>
+  <div class="kpis">${vRows.map(([h, a, c, f]) => `<button class="kpi" style="--c:${COLORS[c]}" data-go="cal:st=SERV&_days=${f}"><b>${a.length}</b><span>${h}</span></button>`).join('')}</div>
+  <div class="cols" style="margin-top:12px">
+    <div class="box"><h3>Custodia</h3><div class="sub">Estado de envío a calibración (se cambia desde la ficha, con confirmación).</div>
+      <div class="rows">
+        <button class="rowb" data-go="cal:_cust=En APAS"><i class="sw" style="background:var(--accent2)"></i><span>En APAS</span><b>${C.length - enCal.length}</b><small>${pct(C.length - enCal.length, C.length)}</small></button>
+        <button class="rowb" data-go="cal:_cust=En calibración"><i class="sw" style="background:var(--warn)"></i><span>En calibración</span><b>${enCal.length}</b><small>${pct(enCal.length, C.length)}</small></button>
+      </div>
+      <h3 style="margin-top:14px">No calibrables</h3><div class="sub">${NC.length} registros · ${ncUnits} unidades.</div>
+      <div class="rows">
+        <button class="rowb" data-go="nc:_cond=Perdida"><i class="sw" style="background:var(--bad)"></i><span>Perdidas</span><b>${ncLost}</b><small></small></button>
+        <button class="rowb" data-go="nc:_cond=Scrap"><i class="sw" style="background:var(--soon)"></i><span>Rotas / scrap</span><b>${ncScrap}</b><small></small></button>
+        <button class="rowb" data-go="nc:"><i class="sw" style="background:var(--ok)"></i><span>Con P/N intercambiable registrado</span><b>${ncAlt}</b><small></small></button>
+      </div>
+    </div>
+    <div class="box"><h3>Proveedores de calibración</h3><div class="sub">Los 10 con más herramientas asignadas.</div>
+      <div style="overflow-x:auto"><table class="mini"><thead><tr><th>Proveedor</th><th style="text-align:right">Total</th><th style="text-align:right">No serv.</th><th style="text-align:right">Vencidas</th></tr></thead>
+      <tbody>${provTop.map(([p, o]) => `<tr style="cursor:default"><td>${esc(p)}</td><td class="num">${o.n}</td><td class="num">${o.ns}</td><td class="num">${o.v ? `<span class="b s-bad">${o.v}</span>` : '0'}</td></tr>`).join('')}</tbody></table></div>
+    </div>
+  </div>`;
+  el.querySelectorAll('[data-go]').forEach(b => b.onclick = () => {
+    const [list, q] = b.dataset.go.split(':');
+    const f = {}; q.split('&').filter(Boolean).forEach(p => { const [k, v] = p.split('='); f[k] = v; });
+    LISTS[list].preset(f); go(list === 'cal' ? 'calibrables' : 'no-calibrables');
+  });
+}
+
+// ================= LISTS =================
+const pill = (t, c) => `<span class="b s-${c}">${esc(t)}</span>`;
+const stPill = s => pill(s, s === 'SERV' ? 'ok' : s === 'NO SERV' ? 'bad' : 'na');
+const custPill = s => pill(s, s === 'En calibración' ? 'warn' : 'info');
+const condPill = c => c ? pill(c, c === 'Perdida' || c === 'Scrap' ? 'bad' : 'warn') : '<span style="color:var(--muted)">—</span>';
+const daysPill = n => pill(dayTxt(n), dayCls(n));
+const DAYS_F = [['', 'Todos'], ['venc', 'Vencidas'], ['30', '0–30 d'], ['90', '31–90 d'], ['180', '91–180 d'], ['181', '> 180 d'], ['6m', 'Próx. 6 meses'], ['none', 'Sin fecha']];
+const daysMatch = (n, f) => !f ? true : f === 'none' ? n == null : n == null ? false : f === 'venc' ? n < 0 : f === '30' ? n >= 0 && n <= 30 : f === '90' ? n > 30 && n <= 90 : f === '180' ? n > 90 && n <= 180 : f === '181' ? n > 180 : f === '6m' ? n >= 0 && n <= 183 : true;
+const CAL_COLS = [
+  {k:'id', h:'ID', f:'text', cls:'mono nw'},
+  {k:'pn', h:'P/N', f:'text', cls:'mono'},
+  {k:'desc', h:'Descripción', f:'text', r:i => `${esc(i.desc)}${i._hl ? `<span class="ri">↔ ${esc(i._hl)}</span>` : ''}`},
+  {k:'sn', h:'S/N', f:'text', cls:'mono', hide:true},
+  {k:'mfr', h:'Fabricante', f:'text', hide:true},
+  {k:'loc', h:'Ubicación', f:'text', r:i => `${esc(i.loc || '—')}${i._locName ? `<small>${esc(i._locName)}</small>` : ''}`},
+  {k:'_cat', h:'Tipo ubicación', f:'select', hide:true},
+  {k:'st', h:'Estado', f:'select', r:i => stPill(i.st)},
+  {k:'_cust', h:'Custodia', f:'select', r:i => custPill(i._cust)},
+  {k:'_cond', h:'Condición', f:'select', r:i => condPill(i._cond), hide:true, opts:COND_OPTS.map(c => [c || '∅', COND_TXT(c)])},
+  {k:'per', h:'Periodicidad', f:'select', hide:true},
+  {k:'last', h:'Últ. calibración', f:'text', r:i => fmt(i.last), cls:'nw', hide:true},
+  {k:'next', h:'Próx. calibración', f:'text', r:i => fmt(i.next), cls:'nw'},
+  {k:'_days', h:'Días rem.', f:'days', r:i => daysPill(i._days), cls:'nw'},
+  {k:'_ctype', h:'Calibración', f:'select'},
+  {k:'by', h:'Calibrado por', f:'text', hide:true},
+  {k:'cert', h:'Certificado', f:'text', cls:'mono', hide:true},
+  {k:'prog', h:'Programa', f:'select', hide:true},
+];
+const NC_COLS = [
+  {k:'ach', h:'ACH Asset', f:'text', cls:'mono nw'},
+  {k:'pn', h:'Model / P/N', f:'text', cls:'mono'},
+  {k:'desc', h:'Descripción APAS', f:'text', r:i => `${esc(i.desc)}${i._hl ? `<span class="ri">↔ ${esc(i._hl)}</span>` : ''}`},
+  {k:'oem', h:'Descripción OEM', f:'text', hide:true},
+  {k:'sn', h:'S/N', f:'text', cls:'mono'},
+  {k:'loc', h:'Ubicación', f:'text', r:i => `${esc(i.loc || '—')}${i._locName ? `<small>${esc(i._locName)}</small>` : ''}`},
+  {k:'_cat', h:'Tipo ubicación', f:'select'},
+  {k:'qty', h:'Cant.', f:'text', cls:'num'},
+  {k:'_cond', h:'Condición', f:'select', r:i => condPill(i._cond), opts:COND_OPTS.map(c => [c || '∅', COND_TXT(c)])},
+  {k:'alt', h:'Alternative part', f:'text', cls:'mono', r:i => esc(i.alt || '')},
+  {k:'apl', h:'Aplicabilidad', f:'text', hide:true, r:i => esc(i._apl.join(', '))},
+  {k:'ci', h:'Costo inicial', f:'text', hide:true, cls:'num'},
+  {k:'cn', h:'Costo nuevo', f:'text', hide:true, cls:'num'},
+];
+const lsGet = k => { try { return JSON.parse(localStorage.getItem(k)); } catch(e){ return null; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch(e){} };
+function makeList(kind, elId, cols, title, lead){
+  const S = {q:'', sortK: kind === 'cal' ? '_days' : 'ach', dir:1, f:{}, lim:200, built:false, vis:null};
+  S.vis = new Set(lsGet('cols:' + kind) || cols.filter(c => !c.hide).map(c => c.k));
+  const src = () => kind === 'cal' ? CAL : NC;
+  const el = () => $('#' + elId);
+  const visCols = () => cols.filter(c => S.vis.has(c.k));
+  function optsFor(c){
+    if (c.opts) return c.opts;
+    const v = [...new Set(src().map(i => i[c.k] ?? ''))].sort((a, b) => String(a).localeCompare(String(b), 'es'));
+    return v.map(x => [x === '' ? '∅' : x, x === '' ? '(vacío)' : x]);
+  }
+  function build(){
+    const e = el();
+    e.innerHTML = `<div class="toolbar">
+      <input type="search" id="${kind}Q" placeholder="Buscar P/N, ID, S/N, descripción, ubicación… (marca en amarillo las intercambiables)" value="${esc(S.q)}" aria-label="Buscar">
+      <button class="btn" id="${kind}Clr">Limpiar filtros</button>
+      <details class="colpick"><summary class="btn">Columnas</summary><div class="menu">${cols.map(c => `<label><input type="checkbox" data-col="${c.k}" ${S.vis.has(c.k) ? 'checked' : ''}> ${esc(c.h)}</label>`).join('')}</div></details>
+      <span class="count" id="${kind}Cnt"></span></div>
+      <p class="hint">${lead}</p>
+      <div class="wrap"><table><thead id="${kind}TH"></thead><tbody id="${kind}TB"></tbody></table></div>
+      <button class="btn more" id="${kind}More" hidden>Mostrar más</button>`;
+    $('#' + kind + 'Q').addEventListener('input', e => { S.q = e.target.value; S.lim = 200; body(); });
+    $('#' + kind + 'Clr').onclick = () => { S.q = ''; S.f = {}; S.lim = 200; $('#' + kind + 'Q').value = ''; head(); body(); };
+    e.querySelectorAll('[data-col]').forEach(cb => cb.onchange = () => { cb.checked ? S.vis.add(cb.dataset.col) : S.vis.delete(cb.dataset.col); lsSet('cols:' + kind, [...S.vis]); head(); body(); });
+    $('#' + kind + 'More').onclick = () => { S.lim += 400; body(); };
+    $('#' + kind + 'TB').addEventListener('click', ev => { const tr = ev.target.closest('tr[data-k]'); if (tr) openFicha(tr.dataset.k); });
+    S.built = true; head();
+  }
+  function head(){
+    const vc = visCols(), th = $('#' + kind + 'TH');
+    th.innerHTML = `<tr>${vc.map(c => `<th class="s" data-s="${c.k}" title="Ordenar">${esc(c.h)}<span class="ar">${S.sortK === c.k ? (S.dir > 0 ? ' ▲' : ' ▼') : ''}</span></th>`).join('')}</tr>
+      <tr class="f">${vc.map(c => `<th>${c.f === 'select' ? `<select data-f="${c.k}" aria-label="Filtrar ${esc(c.h)}"><option value="">Todos</option>${optsFor(c).map(([v, t]) => `<option value="${esc(v)}" ${S.f[c.k] === String(v) ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>`
+        : c.f === 'days' ? `<select data-f="${c.k}" aria-label="Filtrar ${esc(c.h)}">${DAYS_F.map(([v, t]) => `<option value="${v}" ${(S.f[c.k] || '') === v ? 'selected' : ''}>${t}</option>`).join('')}</select>`
+        : `<input data-f="${c.k}" value="${esc(S.f[c.k] || '')}" placeholder="Filtrar" aria-label="Filtrar ${esc(c.h)}">`}</th>`).join('')}</tr>`;
+    th.querySelectorAll('th.s').forEach(h => h.onclick = () => { const k = h.dataset.s; S.dir = S.sortK === k ? -S.dir : 1; S.sortK = k; head(); body(); });
+    th.querySelectorAll('[data-f]').forEach(inp => inp.addEventListener('input', () => { const v = inp.value; if (v === '') delete S.f[inp.dataset.f]; else S.f[inp.dataset.f] = v; S.lim = 200; body(); }));
+  }
+  function filtered(){
+    const toks = S.q.toLowerCase().split(/\s+/).filter(Boolean);
+    const colPass = i => Object.entries(S.f).every(([k, v]) => {
+      const c = cols.find(x => x.k === k);
+      if (!c) return true;
+      if (c.f === 'days') return daysMatch(i._days, v);
+      if (c.f === 'select') return String(i[k] ?? '') === (v === '∅' ? '' : v);
+      const val = k === 'apl' ? i._apl.join(', ') : k === 'last' || k === 'next' ? fmt(i[k]) + ' ' + (i[k] || '') : String(i[k] ?? '');
+      return val.toLowerCase().includes(v.toLowerCase());
+    });
+    let rows = src().filter(colPass);
+    rows.forEach(i => { i._hl = ''; });
+    if (!toks.length) return rows;
+    const hit = rows.filter(i => toks.every(t => i._txt.includes(t)));
+    // interchangeable highlight: P/N related to the matched P/N (or to the typed text as a P/N)
+    const matched = new Set(hit.map(i => i._pnN).filter(Boolean));
+    const qN = normPN(S.q); if (qN.length >= 3) REL.forEach((_, p) => { if (p.includes(qN)) matched.add(p); });
+    const rel = new Map();
+    if (matched.size <= 400) matched.forEach(p => (REL.get(p) || []).forEach(r => { if (!matched.has(r.o)) rel.set(r.o, `${REL_TYPES[r.t]?.h || r.t} de ${p}`); }));
+    const hitSet = new Set(hit);
+    const extra = rel.size ? rows.filter(i => !hitSet.has(i) && rel.has(i._pnN)) : [];
+    extra.forEach(i => { i._hl = rel.get(i._pnN); });
+    return [...hit, ...extra];
+  }
+  function sortRows(rows){
+    const k = S.sortK, d = S.dir;
+    return rows.sort((a, b) => {
+      let va = a[k], vb = b[k];
+      if (k === 'apl'){ va = a._apl.join(','); vb = b._apl.join(','); }
+      const ea = va == null || va === '', eb = vb == null || vb === '';
+      if (ea !== eb) return ea ? 1 : -1;
+      if (ea) return 0;
+      const na = typeof va === 'number' ? va : (k === 'qty' ? parseFloat(va) : NaN), nb = typeof vb === 'number' ? vb : (k === 'qty' ? parseFloat(vb) : NaN);
+      const r = !isNaN(na) && !isNaN(nb) ? na - nb : String(va).localeCompare(String(vb), 'es', {numeric:true});
+      return r * d;
+    });
+  }
+  function body(){
+    const vc = visCols(), rows = sortRows(filtered());
+    const n = rows.filter(i => i._hl).length;
+    $('#' + kind + 'TB').innerHTML = rows.slice(0, S.lim).map(i => `<tr data-k="${esc(i.k)}" class="${i._hl ? 'hl' : ''}">${vc.map(c => `<td class="${c.cls || ''}">${c.r ? c.r(i) : esc(i[c.k] ?? '')}</td>`).join('')}</tr>`).join('')
+      || `<tr style="cursor:default"><td colspan="${vc.length}" class="empty">Sin resultados con estos filtros.</td></tr>`;
+    $('#' + kind + 'Cnt').textContent = `${rows.length - n} de ${src().length}${n ? ` · ${n} intercambiables en amarillo` : ''}`;
+    const m = $('#' + kind + 'More'); m.hidden = rows.length <= S.lim; m.textContent = `Mostrar más (${rows.length - S.lim} restantes)`;
+  }
+  return {
+    render(){ if (!S.built || !el().firstChild) build(); else head(); body(); },
+    preset(f){ S.f = {...f}; S.q = ''; S.lim = 200; if (S.built){ $('#' + kind + 'Q').value = ''; } Object.keys(f).forEach(k => S.vis.add(k)); if (S.built) build(); },
+  };
+}
+const LISTS = {
+  cal: makeList('cal', 'v-calibrables', CAL_COLS, 'Calibrables', 'Haz clic en una fila para abrir su ficha. Los encabezados ordenan; la segunda fila filtra por columna. “Días rem.” = próxima calibración − hoy.'),
+  nc: makeList('nc', 'v-no-calibrables', NC_COLS, 'No calibrables', 'Inventario de herramientas y equipos no calibrables. Haz clic en una fila para abrir su ficha.'),
+};
+
+// ================= FICHA =================
+const OPEN = {k:null, edit:false, logUnsub:null, log:[], draft:null};
+const CAL_FIELDS = [
+  ['id','ID'],['asset','Asset (PTR)'],['ach','ACH Asset'],['pn','P/N'],['sn','S/N'],['desc','Descripción'],['mfr','Fabricante'],['sw','Software rev.'],
+  ['loc','Ubicación'],['st','Estado',['SERV','NO SERV']],['cond','Condición',COND_OPTS],['per','Periodicidad'],['last','Última calibración','date'],['next','Próxima calibración','date'],
+  ['by','Calibrado por'],['ctype','Tipo de calibración',['', 'Interna', 'Externa']],['cert','Certificado'],['lastBy','Certificado emitido por'],['prog','Programa',['Calibración','Mant. preventiva']],
+  ['check','Only Check-C'],['fam','Familia'],['apl','Aplicabilidad','apl'],['acft','Aeronave (matrícula)'],['area','Área / laboratorio'],['notes','Notas','area']
+];
+const NC_FIELDS = [
+  ['ach','ACH Asset'],['pn','Model / P/N'],['sn','S/N'],['desc','Descripción APAS'],['oem','Descripción OEM'],['loc','Ubicación'],['qty','Cantidad'],
+  ['cond','Condición',COND_OPTS],['apl','Aplicabilidad','apl'],['acft','Aeronave (matrícula)'],['area','Área / laboratorio'],['doc','Documento'],['alt','Alternative part (texto Excel)'],['ci','Costo inicial'],['cn','Costo nuevo'],['notes','Notas','area']
+];
+function openFicha(k){
+  closeFicha(true);
+  OPEN.k = k; OPEN.edit = false; OPEN.log = [];
+  if (RT.db){
+    try { OPEN.logUnsub = RT.db.collection('log').where('key', '==', k).onSnapshot(s => { OPEN.log = s.docs.map(d => d.data()).sort((a, b) => String(b.at).localeCompare(String(a.at))); resolveNames(OPEN.log.map(l => l.by)).then(renderLog); renderLog(); }, () => {}); } catch(e){}
+  }
+  renderFicha();
+}
+function closeFicha(silent){
+  if (OPEN.logUnsub){ try { OPEN.logUnsub(); } catch(e){} OPEN.logUnsub = null; }
+  OPEN.k = null; $('#ovHost').innerHTML = '';
+}
+const cantEdit = () => !RT.canWrite;
+function fieldVal(it, k){
+  if (k === 'cond') return COND_TXT(it._cond);
+  if (k === 'last' || k === 'next') return fmt(it[k]);
+  if (k === 'apl') return it._apl.join(', ');
+  if (k === 'ctype') return it._ctype ? `${it._ctype}${it.ctype ? '' : ' (según proveedor)'}` : '';
+  return it[k];
+}
+function renderFicha(){
+  const it = BYK.get(OPEN.k); if (!it) return closeFicha();
+  const cal = it._kind === 'cal', F = cal ? CAL_FIELDS : NC_FIELDS;
+  const rels = REL.get(it._pnN) || [];
+  const same = (cal ? CAL : NC).filter(u => u._pnN && u._pnN === it._pnN && u.k !== it.k);
+  const grp = cal ? categoryUnits(it) : [];
+  const avail = grp.filter(u => u.k !== it.k && available(u));
+  const ro = cantEdit();
+  const host = $('#ovHost');
+  const draft = OPEN.draft || {};
+  host.innerHTML = `<div class="overlay" id="ov"><div class="panel" role="dialog" aria-modal="true" aria-label="Ficha">
+    <div class="phead"><div style="min-width:0"><h2>${esc(cal ? (it.id || it.pn) : (it.ach || it.pn))} · ${esc(it.desc || '')}</h2>
+      <div class="sub">P/N <span class="mono">${esc(it.pn || '—')}</span> · S/N <span class="mono">${esc(it.sn || '—')}</span> · ${cal ? 'Calibrable' : 'No calibrable'}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:6px">${cal ? stPill(it.st) + custPill(it._cust) + daysPill(it._days) : ''}${it._cond ? condPill(it._cond) : ''}${pill(it._cat, 'na')}</div></div>
+      <button class="x" id="fX" aria-label="Cerrar">×</button></div>
+    <div class="pbody">
+      <div class="toprow">
+        <div class="photo"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="5" width="18" height="15" rx="2"/><circle cx="12" cy="12.5" r="3.5"/><path d="M8 5l1.5-2h5L16 5"/></svg>Foto pendiente<br>Se podrá agregar más adelante</div>
+        ${cal ? `<div class="box cust"><h3 style="margin:0">Envío a calibración</h3>
+          <div class="seg" role="group" aria-label="Custodia">${CUST_OPTS.map(o => `<button data-cust="${o}" class="${it._cust === o ? 'on' : ''}" ${ro ? 'disabled' : ''}>${o}</button>`).join('')}</div>
+          <div style="font-size:12.5px;color:var(--muted)">${it.custAt ? `Último cambio: ${fmt(it.custAt)}${it.custBy ? ' · ' + esc(nameOf(it.custBy)) : ''}${it.custNote ? ' · ' + esc(it.custNote) : ''}` : 'Sin cambios registrados en esta app (estado inicial deducido de la ubicación).'}</div>
+          <div class="alert ${avail.length ? 'ok' : 'bad'}">${avail.length ? `Su categoría tiene <b>${avail.length}</b> otra${avail.length > 1 ? 's' : ''} unidad${avail.length > 1 ? 'es' : ''} disponible${avail.length > 1 ? 's' : ''} en APAS (servible, vigente).` : `<b>No hay otra unidad disponible en APAS</b> de este P/N ni de sus intercambiables. Si se envía, la categoría queda sin respaldo.`}</div>
+          ${ro ? '<div style="font-size:12px;color:var(--muted)">Solo lectura: necesitas permiso de edición para cambiar la custodia.</div>' : ''}</div>`
+        : `<div class="box"><h3 style="margin:0 0 8px">Resumen</h3><div class="grid"><div class="f"><span>Ubicación</span><b>${esc(it.loc || '—')}</b></div><div class="f"><span>Cantidad</span><b>${esc(it.qty || '—')}</b></div><div class="f"><span>Mismo P/N en inventario</span><b>${same.length}</b></div><div class="f"><span>Intercambiables</span><b>${rels.length}</b></div></div></div>`}
+      </div>
+      <div class="box"><h3>Datos ${ro ? '' : `<span style="margin-left:auto;display:flex;gap:6px">${OPEN.edit ? '<button class="btn sm" id="fCancel">Cancelar</button><button class="btn sm pri" id="fSave">Guardar cambios</button>' : '<button class="btn sm" id="fEdit">Editar datos</button>'}</span>`}</h3>
+        <div id="fMsg"></div>
+        <div class="grid">${F.map(([k, h, t]) => OPEN.edit ? editField(it, k, h, t, draft) : `<div class="f" ${t === 'area' ? 'style="grid-column:1/-1"' : ''}><span>${esc(h)}</span><b>${esc(fieldVal(it, k) || '—')}</b></div>`).join('')}
+        ${cal && !OPEN.edit ? `<div class="f"><span>Días remanentes</span><b>${esc(dayTxt(it._days))}</b></div><div class="f"><span>Nombre de ubicación</span><b>${esc(it._locName || '—')}</b></div>` : ''}</div>
+      </div>
+      <div class="box"><h3>Herramientas intercambiables <span class="b s-info">${rels.length}</span></h3>
+        <div id="relList">${rels.length ? rels.map(r => relRow(r)).join('') : '<div class="empty" style="padding:4px 0">Sin intercambiables registrados para este P/N.</div>'}</div>
+        ${ro ? '' : `<div class="relform"><span style="font-size:12.5px;font-weight:650">Agregar:</span><input id="rPn" list="pnList" placeholder="P/N relacionado" aria-label="P/N relacionado">
+          <select id="rT" aria-label="Tipo de relación">${Object.entries(REL_TYPES).map(([k, v]) => `<option value="${k}">${v.h}</option>`).join('')}</select>
+          <select id="rDir" aria-label="Sentido"><option value="a">Esta es la superior / nueva</option><option value="b">La otra es la superior / nueva</option></select>
+          <button class="btn sm pri" id="rAdd">Agregar</button><datalist id="pnList"></datalist></div>`}
+        <div class="legend">${Object.entries(REL_TYPES).map(([k, v]) => `<div><span class="rt rt-${k}" style="align-self:flex-start">${v.h}</span>${esc(v.d)}</div>`).join('')}</div>
+      </div>
+      ${cal ? `<div class="box"><h3>Unidades de su categoría <span class="b s-info">${grp.length}</span></h3><div class="sub">Mismo P/N más los P/N que pueden reemplazarla.</div>
+        <div style="overflow-x:auto"><table class="mini"><thead><tr><th>ID</th><th>P/N</th><th>Estado</th><th>Custodia</th><th>Venc.</th><th></th></tr></thead><tbody>
+        ${grp.map(u => `<tr data-k="${esc(u.k)}" ${u.k === it.k ? 'style="cursor:default;font-weight:650"' : ''}><td class="mono">${esc(u.id || '—')}${u.k === it.k ? ' (esta)' : ''}</td><td class="mono">${esc(u.pn)}</td><td>${stPill(u.st)}</td><td>${custPill(u._cust)}</td><td>${daysPill(u._days)}</td><td>${u.k !== it.k && available(u) ? pill('Disponible', 'ok') : ''}</td></tr>`).join('')}</tbody></table></div></div>`
+      : same.length ? `<div class="box"><h3>Mismo P/N en inventario <span class="b s-info">${same.length}</span></h3><div style="overflow-x:auto"><table class="mini"><tbody>${same.slice(0, 50).map(u => `<tr data-k="${esc(u.k)}"><td class="mono">${esc(u.ach || '—')}</td><td>${esc(u.desc)}</td><td>${esc(u.loc || '')}</td></tr>`).join('')}</tbody></table></div></div>` : ''}
+      <div class="box"><h3>Historial de cambios</h3><div id="fLog"></div></div>
+    </div></div></div>`;
+  $('#ov').addEventListener('click', e => { if (e.target.id === 'ov') closeFicha(); });
+  $('#fX').onclick = () => closeFicha();
+  host.querySelectorAll('tr[data-k]').forEach(tr => { if (tr.dataset.k !== it.k) tr.onclick = () => openFicha(tr.dataset.k); });
+  host.querySelectorAll('[data-cust]').forEach(b => b.onclick = () => { if (b.dataset.cust !== it._cust) askCustody(it, b.dataset.cust); });
+  host.querySelectorAll('[data-rdel]').forEach(b => b.onclick = () => askDeleteRel(b.dataset.rdel, b.dataset.o));
+  host.querySelectorAll('[data-ro]').forEach(b => b.onclick = () => { const tgt = [...CAL, ...NC].find(u => u._pnN === b.dataset.ro); if (tgt) openFicha(tgt.k); });
+  if ($('#fEdit')) $('#fEdit').onclick = () => { OPEN.edit = true; OPEN.draft = null; renderFicha(); };
+  if ($('#fCancel')) $('#fCancel').onclick = () => { OPEN.edit = false; renderFicha(); };
+  if ($('#fSave')) $('#fSave').onclick = () => saveEdits(it);
+  if ($('#rAdd')){
+    $('#rPn').addEventListener('input', e => { const q = normPN(e.target.value); if (q.length < 2) return; const s = new Set(); for (const u of [...CAL, ...NC]){ if (u._pnN.includes(q) && u._pnN !== it._pnN) s.add(u.pn); if (s.size > 30) break; } $('#pnList').innerHTML = [...s].map(p => `<option value="${esc(p)}">`).join(''); });
+    $('#rAdd').onclick = () => addRel(it);
+  }
+  renderLog();
+}
+function editField(it, k, h, t, draft){
+  const v = draft[k] ?? (k === 'cond' ? it._cond : it[k] ?? '');
+  const id = 'e_' + k;
+  let inp;
+  if (Array.isArray(t)) inp = `<select id="${id}" data-e="${k}">${t.map(o => `<option value="${esc(o)}" ${String(v) === o ? 'selected' : ''}>${esc(k === 'cond' ? COND_TXT(o) : k === 'ctype' && !o ? 'Según proveedor' : o)}</option>`).join('')}</select>`;
+  else if (t === 'date') inp = `<input type="date" id="${id}" data-e="${k}" value="${esc(v)}">`;
+  else if (t === 'area') inp = `<textarea id="${id}" data-e="${k}" rows="3">${esc(v)}</textarea>`;
+  else if (t === 'apl'){ const cur = new Set(String(v).split(/[,;]+/).map(x => x.trim()).filter(Boolean));
+    return `<div class="f" style="grid-column:1/-1"><span>${esc(h)}</span><div class="chips" style="margin-top:4px">${APL_OPTS.map(a => `<label class="chk"><input type="checkbox" data-apl="${a}" ${cur.has(a) ? 'checked' : ''}> ${a}</label>`).join('')}<input id="e_aplx" placeholder="Otras (separadas por coma)" value="${esc([...cur].filter(x => !APL_OPTS.includes(x)).join(', '))}" style="flex:1 1 160px"></div></div>`; }
+  else inp = `<input id="${id}" data-e="${k}" value="${esc(v)}">`;
+  return `<div class="f" ${t === 'area' ? 'style="grid-column:1/-1"' : ''}><span>${esc(h)}</span>${inp}</div>`;
+}
+function relRow(r){
+  const has = [...CAL, ...NC].some(u => u._pnN === r.o);
+  return `<div class="relrow"><span class="rt rt-${r.t}">${esc(REL_TYPES[r.t]?.h || r.t)}</span>
+    <div style="min-width:0">${esc(relLabel(r.t, r.role))} ${has ? `<button class="btn sm mono" data-ro="${esc(r.o)}">${esc(r.o)}</button>` : `<b class="mono">${esc(r.o)}</b> <small style="color:var(--muted)">(no está en inventario)</small>`}
+    <div style="font-size:11.5px;color:var(--muted)">${esc(r.src || 'Registrado en la app')}${r.note ? ' · ' + esc(r.note) : ''}</div></div>
+    ${cantEdit() ? '<span></span>' : `<button class="btn sm" data-rdel="${esc(r.id)}" data-o="${esc(r.o)}">Quitar</button>`}</div>`;
+}
+function fMsg(t, err){ const m = $('#fMsg'); if (m) m.innerHTML = t ? `<div class="msg ${err ? 'err' : ''}">${esc(t)}</div>` : ''; }
+function renderLog(){
+  const el = $('#fLog'); if (!el) return;
+  el.innerHTML = !RT.db ? '<div class="empty" style="padding:4px 0">El historial se guarda al abrir la app en claude.ai con sesión iniciada.</div>'
+    : OPEN.log.length ? OPEN.log.map(l => `<div class="hist"><b>${esc(fmt(String(l.at).slice(0, 10)))} ${esc(String(l.at).slice(11, 16))}</b> · ${esc(nameOf(l.by))}<br>${esc(l.txt)}</div>`).join('')
+    : '<div class="empty" style="padding:4px 0">Sin cambios registrados.</div>';
+}
+
+// ================= persistence =================
+const nameOf = id => !id ? 'Alguien' : NAMES.get(id) || (id === RT.uid ? 'Tú' : 'Un usuario');
+async function resolveNames(ids){
+  if (!RT.user || !RT.user.profiles) return;
+  const need = [...new Set(ids.filter(x => x && !NAMES.has(x)))]; if (!need.length) return;
+  try { const ps = await RT.user.profiles(need); need.forEach(id => { const n = ps && ps[id] && ps[id].name; if (n) NAMES.set(id, n); }); } catch(e){}
+}
+async function writeLog(k, txt){ if (!RT.db) return; try { await RT.db.collection('log').add({key:k, at:new Date().toISOString(), by:RT.uid || '', txt}); } catch(e){} }
+async function putEdits(it, patch, logTxt){
+  if (!RT.db) throw new Error('Sin conexión a la base de datos compartida. Abre la app en claude.ai con tu sesión iniciada.');
+  const cur = Object.assign({}, EDITS.get(it.k) || {}, patch, {updAt:new Date().toISOString(), updBy:RT.uid || ''});
+  await RT.db.collection('edits').doc(it.k).set(cur);
+  EDITS.set(it.k, cur); refreshAll();
+  await writeLog(it.k, logTxt);
+}
+async function saveEdits(it){
+  const F = it._kind === 'cal' ? CAL_FIELDS : NC_FIELDS;
+  const base = (it._kind === 'cal' ? D.cal : D.nc).find(b => b.k === it.k) || {};
+  const prev = BYK.get(it.k);
+  const patch = {}, ch = [];
+  document.querySelectorAll('[data-e]').forEach(inp => { patch[inp.dataset.e] = inp.value.trim(); });
+  const apl = [...document.querySelectorAll('[data-apl]:checked')].map(x => x.dataset.apl);
+  const aplx = ($('#e_aplx')?.value || '').split(',').map(x => x.trim()).filter(Boolean);
+  if (document.querySelector('[data-apl]')) patch.apl = [...apl, ...aplx].join(', ');
+  F.forEach(([k, h]) => {
+    if (!(k in patch)) return;
+    const old = k === 'cond' ? prev._cond : String(prev[k] ?? '');
+    if (patch[k] === old) delete patch[k]; else ch.push(`${h}: “${old || '—'}” → “${patch[k] || '—'}”`);
+  });
+  if (!ch.length){ OPEN.edit = false; renderFicha(); return; }
+  try { await putEdits(it, patch, 'Datos editados. ' + ch.join('; ')); OPEN.edit = false; renderFicha(); fMsg('Cambios guardados.'); }
+  catch(e){ fMsg('No se pudieron guardar los cambios: ' + (e.message || e.code || e), true); }
+}
+async function addRel(it){
+  const o = normPN($('#rPn').value), t = $('#rT').value, dir = $('#rDir').value;
+  if (!o) return fMsg('Escribe el P/N relacionado.', true);
+  if (o === it._pnN) return fMsg('El P/N relacionado debe ser distinto al de esta herramienta.', true);
+  if (!RT.db) return fMsg('Sin conexión a la base de datos compartida.', true);
+  const a = t === 'full' ? [it._pnN, o].sort()[0] : dir === 'a' ? it._pnN : o;
+  const b = a === it._pnN ? o : it._pnN;
+  const id = relId(a, b);
+  const doc = {a, b, t, src:'Registrado en la app', at:new Date().toISOString(), by:RT.uid || ''};
+  try { await RT.db.collection('rel').doc(id).set(doc); RELDB.set(id, doc); refreshAll(); await writeLog(it.k, `Intercambiable agregado: ${REL_TYPES[t].h} ${a} → ${b}`); }
+  catch(e){ fMsg('No se pudo guardar la relación: ' + (e.message || e.code || e), true); }
+}
+function askDeleteRel(id, o){
+  const it = BYK.get(OPEN.k);
+  modal(`<h3>¿Quitar la relación con ${esc(o)}?</h3><p style="margin:0;font-size:13.5px">Se quita para ambos P/N. Queda registrado en el historial.</p>`,
+    [['Cancelar'], ['Sí, quitar', 'danger', async () => {
+      try { const doc = {deleted:true, at:new Date().toISOString(), by:RT.uid || ''}; await RT.db.collection('rel').doc(id).set(doc); RELDB.set(id, doc); refreshAll(); await writeLog(it.k, `Intercambiable quitado: ${o}`); }
+      catch(e){ fMsg('No se pudo quitar: ' + (e.message || e.code || e), true); }
+    }]]);
+}
+function modal(html, actions, onMount){
+  const h = $('#modalHost');
+  h.innerHTML = `<div class="modal" id="mdl"><div class="mbox" role="alertdialog" aria-modal="true">${html}<div class="mact">${actions.map((a, i) => `<button class="btn ${a[1] || ''}" data-a="${i}">${esc(a[0])}</button>`).join('')}</div></div></div>`;
+  const close = () => { h.innerHTML = ''; };
+  h.querySelectorAll('[data-a]').forEach(b => b.onclick = async () => { const a = actions[+b.dataset.a]; if (a[2]){ b.disabled = true; const keep = await a[2](); if (keep === true){ b.disabled = false; return; } } close(); });
+  $('#mdl').addEventListener('click', e => { if (e.target.id === 'mdl') close(); });
+  if (onMount) onMount(h);
+}
+function perMonths(per){ const m = String(per || '').toLowerCase().match(/(\d+)\s*(mes|año|ano)/); return m ? (+m[1]) * (m[2] === 'mes' ? 1 : 12) : 12; }
+function askCustody(it, to){
+  const grp = categoryUnits(it), avail = grp.filter(u => u.k !== it.k && available(u));
+  const last = to === 'En calibración' && avail.length === 0;
+  const thisAvail = available(it);
+  const table = `<div style="overflow-x:auto;max-height:220px"><table class="mini"><thead><tr><th>ID</th><th>P/N</th><th>Estado</th><th>Custodia</th><th>Venc.</th></tr></thead><tbody>${grp.map(u => `<tr style="cursor:default${u.k === it.k ? ';font-weight:650' : ''}"><td class="mono">${esc(u.id || '—')}${u.k === it.k ? ' (esta)' : ''}</td><td class="mono">${esc(u.pn)}</td><td>${stPill(u.st)}</td><td>${custPill(u._cust)}</td><td>${daysPill(u._days)}</td></tr>`).join('')}</tbody></table></div>`;
+  if (to === 'En calibración'){
+    modal(`<h3>¿Está seguro de enviar ${esc(it.id || it.pn)} a calibración?</h3>
+      <div style="font-size:13.5px">${esc(it.desc || '')} · P/N <span class="mono">${esc(it.pn)}</span></div>
+      ${last ? `<div class="alert bad"><b>Atención: es la última unidad disponible en APAS de su categoría.</b><br>${thisAvail ? 'No queda otra unidad servible y vigente de este P/N ni de sus intercambiables.' : 'Ninguna otra unidad de este P/N ni de sus intercambiables está disponible.'} Se recomienda esperar el retorno de otra unidad antes de enviarla.</div>`
+        : `<div class="alert ok">Quedarán <b>${avail.length}</b> unidad${avail.length > 1 ? 'es' : ''} disponible${avail.length > 1 ? 's' : ''} en APAS de su categoría.</div>`}
+      ${table}
+      <div class="grid"><div class="f"><span>Fecha de envío</span><input type="date" id="mDate" value="${HOY}"></div><div class="f"><span>Proveedor</span><input id="mProv" value="${esc(it.by || '')}"></div></div>
+      <div class="f"><span>Nota (opcional)</span><input id="mNote" placeholder="OT, guía de despacho, motivo…"></div>
+      ${last ? '<label class="chk" style="color:var(--bad);font-weight:650"><input type="checkbox" id="mAck"> Entiendo que la categoría queda sin unidades disponibles y quiero enviarla igual</label>' : ''}
+      <div id="mErr"></div>`,
+      [['Cancelar'], [last ? 'Enviar de todas formas' : 'Sí, enviar a calibración', last ? 'danger' : 'pri', async () => {
+        const d = $('#mDate').value || HOY, prov = $('#mProv').value.trim(), note = $('#mNote').value.trim();
+        try { await putEdits(it, {cust:'En calibración', custAt:d, custBy:RT.uid || '', custNote:note, ...(prov && prov !== (it.by || '') ? {by:prov} : {})},
+          `Enviada a calibración el ${fmt(d)}${prov ? ' (' + prov + ')' : ''}${last ? ' · ADVERTENCIA: última unidad disponible de su categoría' : ''}${note ? ' · ' + note : ''}`); }
+        catch(e){ $('#mErr').innerHTML = `<div class="msg err">${esc(e.message || e.code || e)}</div>`; return true; }
+      }]],
+      h => { const ack = $('#mAck'); if (ack){ const btn = h.querySelector('[data-a="1"]'); btn.disabled = true; ack.onchange = () => { btn.disabled = !ack.checked; }; } });
+  } else {
+    const nm = perMonths(it.per);
+    modal(`<h3>¿Está seguro de registrar el retorno de ${esc(it.id || it.pn)} a APAS?</h3>
+      <div style="font-size:13.5px">${esc(it.desc || '')} · P/N <span class="mono">${esc(it.pn)}</span></div>
+      <div class="alert warn">Si la herramienta vuelve calibrada, registra la nueva fecha y certificado. La próxima calibración se propone según la periodicidad (${esc(it.per || '1 año')}).</div>
+      <label class="chk"><input type="checkbox" id="mCal" checked> Vuelve calibrada (actualizar fechas y certificado)</label>
+      <div class="grid" id="mCalBox"><div class="f"><span>Fecha de calibración</span><input type="date" id="mLast" value="${HOY}"></div>
+        <div class="f"><span>Próxima calibración</span><input type="date" id="mNext" value="${isoOf(addMonths(TODAY, nm))}"></div>
+        <div class="f"><span>Certificado</span><input id="mCert" value=""></div>
+        <div class="f"><span>Estado</span><select id="mSt"><option>SERV</option><option ${it.st === 'NO SERV' ? '' : ''}>NO SERV</option></select></div></div>
+      <div class="f"><span>Nota (opcional)</span><input id="mNote"></div><div id="mErr"></div>`,
+      [['Cancelar'], ['Sí, registrar retorno', 'pri', async () => {
+        const calOk = $('#mCal').checked, note = $('#mNote').value.trim();
+        const patch = {cust:'En APAS', custAt:HOY, custBy:RT.uid || '', custNote:note};
+        if (calOk){ patch.last = $('#mLast').value; patch.next = $('#mNext').value; patch.st = $('#mSt').value; if ($('#mCert').value.trim()) patch.cert = $('#mCert').value.trim(); }
+        try { await putEdits(it, patch, `Retorno a APAS registrado${calOk ? ` · calibrada ${fmt(patch.last)}, próxima ${fmt(patch.next)}, estado ${patch.st}${patch.cert ? ', cert. ' + patch.cert : ''}` : ''}${note ? ' · ' + note : ''}`); }
+        catch(e){ $('#mErr').innerHTML = `<div class="msg err">${esc(e.message || e.code || e)}</div>`; return true; }
+      }]],
+      () => { $('#mCal').onchange = e => { $('#mCalBox').hidden = !e.target.checked; }; $('#mLast').onchange = e => { const d = parseD(e.target.value); if (d) $('#mNext').value = isoOf(addMonths(d, nm)); }; });
+  }
+}
+
+// ================= FABRICACIÓN DE ARCHIVOS =================
+const EXP_COLS = [
+  {k:'_kind', h:'Tipo', w:12, v:i => i._kind === 'cal' ? 'Calibrable' : 'No calibrable'},
+  {k:'id', h:'ID', w:9}, {k:'ach', h:'ACH Asset', w:11}, {k:'asset', h:'Asset PTR', w:10},
+  {k:'pn', h:'P/N', w:18}, {k:'sn', h:'S/N', w:16}, {k:'desc', h:'Descripción', w:34, wrap:true},
+  {k:'mfr', h:'Fabricante / OEM', w:20, v:i => i.mfr || i.oem || ''},
+  {k:'loc', h:'Ubicación', w:18}, {k:'_locName', h:'Nombre ubicación', w:18}, {k:'_cat', h:'Tipo de ubicación', w:16},
+  {k:'acft', h:'Aeronave', w:12}, {k:'area', h:'Área / laboratorio', w:16},
+  {k:'st', h:'Estado', w:10, v:i => i._kind === 'cal' ? i.st : ''}, {k:'_cond', h:'Condición', w:14, v:i => COND_TXT(i._cond)},
+  {k:'_cust', h:'Custodia', w:14, v:i => i._cust || ''}, {k:'per', h:'Periodicidad', w:12},
+  {k:'last', h:'Última calibración', w:13, date:true}, {k:'next', h:'Próxima calibración', w:13, date:true},
+  {k:'_days', h:'Días remanentes', w:11, days:true}, {k:'_ctype', h:'Tipo calibración', w:13, v:i => i._ctype || ''},
+  {k:'by', h:'Calibrado por', w:18}, {k:'cert', h:'Certificado', w:18}, {k:'qty', h:'Cantidad', w:8},
+  {k:'_apl', h:'Aplicabilidad', w:14, v:i => i._apl.join(', ')}, {k:'_alts', h:'Intercambiables', w:30, wrap:true, v:relsSummary},
+  {k:'notes', h:'Notas', w:30, wrap:true},
+];
+const EXP_DEFAULT = {cal:['id','pn','sn','desc','loc','st','_cust','next','_days','_ctype','by'], nc:['ach','pn','sn','desc','loc','qty','_cond'], all:['_kind','id','ach','pn','sn','desc','loc','st','_cond','next','_days']};
+const CRIT = [
+  ['Estado', [['perd', 'Perdidas', i => i._cond === 'Perdida'], ['rota', 'Rotas / scrap', i => i._cond === 'Rota / dañada' || i._cond === 'Scrap'], ['rep', 'En reparación', i => i._cond === 'En reparación'],
+    ['ns', 'No servibles', i => i.st === 'NO SERV'], ['sv', 'Servibles', i => i.st === 'SERV']]],
+  ['Calibración', [['venc', 'Vencidas', i => i._days != null && i._days < 0], ['v30', 'Vencen ≤ 30 días', i => i._days != null && i._days >= 0 && i._days <= 30], ['v90', 'Vencen ≤ 90 días', i => i._days != null && i._days >= 0 && i._days <= 90],
+    ['encal', 'En calibración', i => i._cust === 'En calibración'], ['enapas', 'En APAS', i => i._cust === 'En APAS'], ['cint', 'Calibración interna', i => i._ctype === 'Interna'], ['cext', 'Calibración externa', i => i._ctype === 'Externa']]],
+  ['Ubicación', [['ndt', 'Laboratorio NDT', i => /NDT/i.test(`${i.loc} ${i._locName} ${i.area || ''}`)], ['taller', 'En talleres', i => i._cat === 'Taller'], ['acft', 'En aeronaves / hangar', i => i._cat === 'Hangar / aeronave' || !!i.acft],
+    ['alm', 'En almacén / pañol', i => i._cat === 'Almacén / pañol'], ['inst', 'Instaladas en equipos', i => i._cat === 'Instalado en equipo']]],
+  ['Aplicabilidad', [...APL_OPTS.map(a => ['apl' + a, a, i => i._apl.includes(a)]), ['airbus', 'Airbus (familia)', i => i._apl.some(x => /^A\d|Airbus/i.test(x))]]],
+  ['Intercambio', [['rel', 'Con intercambiables', i => REL.has(i._pnN)], ['relno', 'Sin intercambiables', i => !REL.has(i._pnN)]]],
+];
+const CRITF = new Map(CRIT.flatMap(g => g[1]).map(c => [c[0], c]));
+const B = {src:'cal', crit:new Set(), mode:'all', q:'', loc:'', prov:'', cols:null, sortK:'_days', dir:1, ex:new Set(), title:'', built:false};
+B.cols = new Set(EXP_DEFAULT.cal);
+const bSrc = () => B.src === 'cal' ? CAL : B.src === 'nc' ? NC : [...CAL, ...NC];
+function bRows(){
+  const cs = [...B.crit].map(k => CRITF.get(k)[2]);
+  const toks = B.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const rows = bSrc().filter(i => (!cs.length || (B.mode === 'all' ? cs.every(f => f(i)) : cs.some(f => f(i))))
+    && toks.every(t => i._txt.includes(t)) && (!B.loc || `${i.loc || ''} ${i._locName}`.toLowerCase().includes(B.loc.toLowerCase())) && (!B.prov || (i.by || '') === B.prov));
+  const col = EXP_COLS.find(c => c.k === B.sortK);
+  const gv = i => col ? (col.v ? col.v(i) : i[col.k]) : '';
+  return rows.sort((a, b) => { const va = gv(a), vb = gv(b); const ea = va == null || va === '', eb = vb == null || vb === ''; if (ea !== eb) return ea ? 1 : -1; if (ea) return 0; return (typeof va === 'number' ? va - vb : String(va).localeCompare(String(vb), 'es', {numeric:true})) * B.dir; });
+}
+function bAutoTitle(){
+  const parts = [...B.crit].map(k => CRITF.get(k)[1]);
+  return `Listado de herramientas ${B.src === 'cal' ? 'calibrables' : B.src === 'nc' ? 'no calibrables' : '(calibrables y no calibrables)'}${parts.length ? ' · ' + parts.join(B.mode === 'all' ? ' + ' : ' o ') : ''}`;
+}
+function renderBuilder(){
+  const el = $('#v-archivos');
+  if (!B.built){
+    el.innerHTML = `<p class="hint" style="margin-top:0">Arma un Excel con libertad: elige la fuente, marca criterios, ajusta columnas y desmarca filas que no quieras. Los criterios de aplicabilidad, aeronave y área se llenan desde las fichas a medida que se agregue información.</p>
+    <div class="bgrid"><aside class="bside">
+      <div class="box"><h3>1 · Fuente</h3><div class="seg" id="bSrc"><button data-s="cal">Calibrables</button><button data-s="nc">No calibrables</button><button data-s="all">Ambas</button></div></div>
+      <div class="box"><h3>2 · Criterios</h3><div id="bCrit"></div>
+        <div class="cgroup">Combinar criterios</div><div class="seg" id="bMode"><button data-m="all">Cumplir todos</button><button data-m="any">Cumplir cualquiera</button></div></div>
+      <div class="box"><h3>3 · Filtros adicionales</h3><div style="display:grid;gap:6px">
+        <input type="search" id="bQ" placeholder="Texto: P/N, descripción, ID…" aria-label="Texto"><input id="bLoc" placeholder="Ubicación contiene…" aria-label="Ubicación">
+        <select id="bProv" aria-label="Proveedor"></select></div></div>
+      <div class="box"><h3>4 · Columnas del archivo</h3><div class="colgrid" id="bCols"></div>
+        <div class="cgroup">Ordenar por</div><div style="display:flex;gap:6px"><select id="bSort" style="flex:1" aria-label="Ordenar por"></select><select id="bDir" aria-label="Sentido"><option value="1">Ascendente</option><option value="-1">Descendente</option></select></div></div>
+      <div class="box"><h3>5 · Título</h3><input id="bTitle" style="width:100%" placeholder="Se genera automáticamente" aria-label="Título"></div>
+    </aside>
+    <section style="min-width:0"><div id="bMsg"></div><div class="toolbar"><b id="bCount"></b><span class="count" style="margin-left:0"></span>
+      <span style="margin-left:auto;display:flex;gap:6px;flex-wrap:wrap"><button class="btn sm" id="bAll">Marcar todas</button><button class="btn sm" id="bNone">Desmarcar todas</button><button class="btn sm" id="bReset">Reiniciar</button><button class="btn pri" id="bPrev">Previsualizar Excel</button></span></div>
+      <div class="wrap"><table><thead id="bTH"></thead><tbody id="bTB"></tbody></table></div><div class="hint" id="bFoot" style="margin-top:6px"></div></section></div>`;
+    el.querySelectorAll('#bSrc button').forEach(b => b.onclick = () => { B.src = b.dataset.s; B.cols = new Set(EXP_DEFAULT[B.src]); B.ex.clear(); bSide(); bList(); });
+    el.querySelectorAll('#bMode button').forEach(b => b.onclick = () => { B.mode = b.dataset.m; bSide(); bList(); });
+    $('#bQ').oninput = e => { B.q = e.target.value; bList(); };
+    $('#bLoc').oninput = e => { B.loc = e.target.value; bList(); };
+    $('#bProv').onchange = e => { B.prov = e.target.value; bList(); };
+    $('#bSort').onchange = e => { B.sortK = e.target.value; bList(); };
+    $('#bDir').onchange = e => { B.dir = +e.target.value; bList(); };
+    $('#bTitle').oninput = e => { B.title = e.target.value; };
+    $('#bAll').onclick = () => { B.ex.clear(); bList(); };
+    $('#bNone').onclick = () => { bRows().forEach(i => B.ex.add(i.k)); bList(); };
+    $('#bReset').onclick = () => { Object.assign(B, {crit:new Set(), mode:'all', q:'', loc:'', prov:'', ex:new Set(), title:'', sortK:'_days', dir:1}); B.cols = new Set(EXP_DEFAULT[B.src]); ['bQ','bLoc','bTitle'].forEach(i => $('#' + i).value = ''); bSide(); bList(); };
+    $('#bTB').addEventListener('click', e => { const tr = e.target.closest('tr[data-k]'); if (!tr) return; if (e.target.closest('.op')) return openFicha(tr.dataset.k); B.ex.has(tr.dataset.k) ? B.ex.delete(tr.dataset.k) : B.ex.add(tr.dataset.k); bList(); });
+    $('#bPrev').onclick = bPreview;
+    B.built = true;
+  }
+  bSide(); bList();
+}
+function bSide(){
+  document.querySelectorAll('#bSrc button').forEach(b => b.classList.toggle('on', b.dataset.s === B.src));
+  document.querySelectorAll('#bMode button').forEach(b => b.classList.toggle('on', b.dataset.m === B.mode));
+  const src = bSrc();
+  $('#bCrit').innerHTML = CRIT.map(([g, cs]) => `<div class="cgroup">${g}</div><div class="chips">${cs.map(([k, h, f]) => `<button class="chip ${B.crit.has(k) ? 'on' : ''}" data-c="${k}">${esc(h)}<small>${src.filter(f).length}</small></button>`).join('')}</div>`).join('');
+  $('#bCrit').querySelectorAll('[data-c]').forEach(b => b.onclick = () => { B.crit.has(b.dataset.c) ? B.crit.delete(b.dataset.c) : B.crit.add(b.dataset.c); B.ex.clear(); bSide(); bList(); });
+  const provs = [...new Set(src.map(i => i.by).filter(Boolean))].sort();
+  $('#bProv').innerHTML = `<option value="">Calibrado por: todos</option>${provs.map(p => `<option ${B.prov === p ? 'selected' : ''}>${esc(p)}</option>`).join('')}`;
+  $('#bCols').innerHTML = EXP_COLS.map(c => `<label class="chk"><input type="checkbox" data-bc="${c.k}" ${B.cols.has(c.k) ? 'checked' : ''}> ${esc(c.h)}</label>`).join('');
+  $('#bCols').querySelectorAll('[data-bc]').forEach(cb => cb.onchange = () => { cb.checked ? B.cols.add(cb.dataset.bc) : B.cols.delete(cb.dataset.bc); bSide(); bList(); });
+  $('#bSort').innerHTML = EXP_COLS.map(c => `<option value="${c.k}" ${B.sortK === c.k ? 'selected' : ''}>${esc(c.h)}</option>`).join('');
+  $('#bDir').value = String(B.dir);
+}
+const bColsSel = () => EXP_COLS.filter(c => B.cols.has(c.k));
+const cv = (c, i) => c.v ? c.v(i) : (i[c.k] ?? '');
+function cellHtml(c, i){
+  const v = cv(c, i);
+  if (c.days) return daysPill(i._days);
+  if (c.date) return esc(fmt(v));
+  if (c.k === 'st' && v) return stPill(v);
+  return esc(v);
+}
+function bList(){
+  const rows = bRows(), cols = bColsSel(), inc = rows.filter(i => !B.ex.has(i.k));
+  $('#bTH').innerHTML = `<tr><th style="width:34px">✓</th>${cols.map(c => `<th>${esc(c.h)}</th>`).join('')}<th></th></tr>`;
+  $('#bTB').innerHTML = rows.slice(0, 500).map(i => `<tr data-k="${esc(i.k)}" class="${B.ex.has(i.k) ? 'ex' : ''}"><td><input type="checkbox" ${B.ex.has(i.k) ? '' : 'checked'} aria-label="Incluir"></td>${cols.map(c => `<td class="${c.k === 'pn' || c.k === 'sn' || c.k === 'id' ? 'mono' : ''}">${cellHtml(c, i)}</td>`).join('')}<td><button class="btn sm op">Ficha</button></td></tr>`).join('')
+    || `<tr style="cursor:default"><td colspan="${cols.length + 2}" class="empty">Ningún registro cumple estos criterios.</td></tr>`;
+  $('#bCount').textContent = `${inc.length} filas irán al Excel · ${rows.length} cumplen los criterios`;
+  $('#bFoot').textContent = rows.length > 500 ? `Se muestran las primeras 500 filas; el Excel incluye todas las marcadas (${inc.length}).` : 'Haz clic en una fila para incluirla o excluirla.';
+  $('#bPrev').disabled = !inc.length || !cols.length;
+}
+function bPreview(){
+  const rows = bRows().filter(i => !B.ex.has(i.k)), cols = bColsSel(), title = B.title.trim() || bAutoTitle();
+  const host = $('#ovHost');
+  host.innerHTML = `<div class="overlay" id="pv"><div class="panel" style="width:min(1200px,100%)"><div class="phead"><div style="min-width:0"><h2>Previsualización del archivo</h2><div class="sub">Así saldrá el Excel: mismas columnas, mismo orden, colores por vencimiento.</div></div>
+    <span style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="pvX">Volver</button><button class="btn pri" id="pvGen">Generar Excel (${rows.length})</button></span></div>
+    <div class="pbody"><div id="pvMsg"></div><div class="box"><div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap"><div style="min-width:0"><b style="font-size:15px">APAS Chile · Gerencia de Calidad · ${esc(title)}</b>
+      <div style="font-size:12px;color:var(--muted)">${esc(bInfo().join('   ·   '))}</div><div style="font-size:12px;color:var(--muted)">Emitido: ${fmt(HOY)} · Registros: ${rows.length}</div></div>
+      <img src="${$('.hlogo').src}" alt="" style="height:36px;margin-left:auto;background:#fff;border-radius:6px;padding:3px"></div>
+      <div class="wrap" style="margin-top:10px;max-height:60vh"><table><thead><tr><th>N°</th>${cols.map(c => `<th>${esc(c.h)}</th>`).join('')}</tr></thead><tbody>${rows.slice(0, 300).map((i, n) => `<tr style="cursor:default"><td class="num">${n + 1}</td>${cols.map(c => `<td>${cellHtml(c, i)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+      ${rows.length > 300 ? `<div class="hint" style="margin-top:6px">Vista previa de 300 de ${rows.length} filas.</div>` : ''}</div></div></div></div>`;
+  $('#pvX').onclick = () => { host.innerHTML = ''; };
+  $('#pv').onclick = e => { if (e.target.id === 'pv') host.innerHTML = ''; };
+  $('#pvGen').onclick = () => exportXlsx(title, cols, rows);
+}
+function bInfo(){
+  const s = [`Fuente: ${B.src === 'cal' ? 'Calibrables' : B.src === 'nc' ? 'No calibrables' : 'Ambas'}`];
+  if (B.crit.size) s.push(`Criterios (${B.mode === 'all' ? 'todos' : 'cualquiera'}): ${[...B.crit].map(k => CRITF.get(k)[1]).join(', ')}`);
+  if (B.q) s.push(`Texto: ${B.q}`); if (B.loc) s.push(`Ubicación: ${B.loc}`); if (B.prov) s.push(`Calibrado por: ${B.prov}`);
+  const sc = EXP_COLS.find(c => c.k === B.sortK); s.push(`Orden: ${sc ? sc.h : ''}${B.dir < 0 ? ' (desc.)' : ''}`);
+  return s;
+}
+// ---- Minimal XLSX writer (sin librerías externas)
+const CRC_T = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n++){ let c = n; for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[n] = c >>> 0; } return t; })();
+function crc32(b){ let c = 0xFFFFFFFF; for (let i = 0; i < b.length; i++) c = CRC_T[(c ^ b[i]) & 0xFF] ^ (c >>> 8); return (c ^ 0xFFFFFFFF) >>> 0; }
+function zip(files){
+  const enc = new TextEncoder(), parts = [], central = []; let off = 0;
+  for (const f of files){
+    const nm = enc.encode(f.name), crc = crc32(f.data), sz = f.data.length;
+    const h = new DataView(new ArrayBuffer(30)); h.setUint32(0, 0x04034b50, true); h.setUint16(4, 20, true); h.setUint16(6, 0x0800, true);
+    h.setUint32(14, crc, true); h.setUint32(18, sz, true); h.setUint32(22, sz, true); h.setUint16(26, nm.length, true);
+    parts.push(new Uint8Array(h.buffer), nm, f.data);
+    const c = new DataView(new ArrayBuffer(46)); c.setUint32(0, 0x02014b50, true); c.setUint16(4, 20, true); c.setUint16(6, 20, true); c.setUint16(8, 0x0800, true);
+    c.setUint32(16, crc, true); c.setUint32(20, sz, true); c.setUint32(24, sz, true); c.setUint16(28, nm.length, true); c.setUint32(42, off, true);
+    central.push(new Uint8Array(c.buffer), nm); off += 30 + nm.length + sz;
+  }
+  const cs = central.reduce((s, a) => s + a.length, 0);
+  const e = new DataView(new ArrayBuffer(22)); e.setUint32(0, 0x06054b50, true); e.setUint16(8, files.length, true); e.setUint16(10, files.length, true); e.setUint32(12, cs, true); e.setUint32(16, off, true);
+  const all = [...parts, ...central, new Uint8Array(e.buffer)], out = new Uint8Array(all.reduce((s, a) => s + a.length, 0)); let p = 0;
+  for (const a of all){ out.set(a, p); p += a.length; } return out;
+}
+const xe = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])).replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '');
+const colL = n => { let s = ''; n++; while (n){ const m = (n - 1) % 26; s = String.fromCharCode(65 + m) + s; n = Math.floor((n - 1) / 26); } return s; };
+const serial = v => { const [y, m, d] = v.split('-').map(Number); return (Date.UTC(y, m - 1, d) - Date.UTC(1899, 11, 30)) / 86400000; };
+// estilos: 1 título, 2 subtítulo, 3 encabezado, 4 texto, 5 fecha, 6-9 fecha ok/warn/soon/bad, 10 centrado, 11-14 días ok/warn/soon/bad, 15-18 leyenda, 19 texto ajustado, 20 SERV, 21 NO SERV
+const SD = {ok:6, warn:7, soon:8, bad:9, na:5}, SN = {ok:11, warn:12, soon:13, bad:14, na:10};
+const FILLS = ['FFC6EFCE', 'FFFFEB9C', 'FFFCD5B4', 'FFFFC7CE'];
+const STYLES = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+<numFmts count="1"><numFmt numFmtId="164" formatCode="dd\\-mm\\-yyyy"/></numFmts>
+<fonts count="5"><font><sz val="10"/><name val="Calibri"/></font><font><b/><sz val="14"/><color rgb="FF173F66"/><name val="Calibri"/></font><font><i/><sz val="9"/><color rgb="FF5E6A79"/><name val="Calibri"/></font><font><b/><sz val="10"/><color rgb="FFFFFFFF"/><name val="Calibri"/></font><font><b/><sz val="10"/><color rgb="FFB42318"/><name val="Calibri"/></font></fonts>
+<fills count="7"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FF173F66"/></patternFill></fill>${FILLS.map(f => `<fill><patternFill patternType="solid"><fgColor rgb="${f}"/></patternFill></fill>`).join('')}</fills>
+<borders count="2"><border/><border><left style="thin"><color rgb="FFBFC6CF"/></left><right style="thin"><color rgb="FFBFC6CF"/></right><top style="thin"><color rgb="FFBFC6CF"/></top><bottom style="thin"><color rgb="FFBFC6CF"/></bottom></border></borders>
+<cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
+<cellXfs count="22"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/>
+<xf fontId="1" applyFont="1"/><xf fontId="2" applyFont="1"/>
+<xf fontId="3" fillId="2" borderId="1" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf>
+<xf borderId="1" applyBorder="1" applyAlignment="1"><alignment vertical="top"/></xf>
+<xf numFmtId="164" borderId="1" applyNumberFormat="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="top"/></xf>
+${[3,4,5,6].map(f => `<xf numFmtId="164" fillId="${f}" borderId="1" applyNumberFormat="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="top"/></xf>`).join('')}
+<xf borderId="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="top"/></xf>
+${[3,4,5,6].map(f => `<xf fillId="${f}" borderId="1" applyFill="1" applyBorder="1" applyAlignment="1"${f === 6 ? ' fontId="4" applyFont="1"' : ''}><alignment horizontal="center" vertical="top"/></xf>`).join('')}
+${[3,4,5,6].map(f => `<xf fillId="${f}" borderId="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center"/></xf>`).join('')}
+<xf borderId="1" applyBorder="1" applyAlignment="1"><alignment vertical="top" wrapText="1"/></xf>
+<xf fillId="3" borderId="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="top"/></xf>
+<xf fontId="4" fillId="6" borderId="1" applyFont="1" applyFill="1" applyBorder="1" applyAlignment="1"><alignment horizontal="center" vertical="top"/></xf>
+</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>`;
+function buildXlsx(title, cols, rows){
+  const head = ['N°', ...cols.map(c => c.h)], widths = [5, ...cols.map(c => c.w || 14)];
+  const nC = head.length, last = colL(nC - 1), HR = 6, out = [], merges = [];
+  const c = (col, row, val, s) => { const ref = colL(col) + row; if (val == null || val === '') return `<c r="${ref}" s="${s}"/>`; if (typeof val === 'number') return `<c r="${ref}" s="${s}"><v>${val}</v></c>`; return `<c r="${ref}" s="${s}" t="inlineStr"><is><t xml:space="preserve">${xe(val)}</t></is></c>`; };
+  out.push(`<row r="1" ht="22" customHeight="1">${c(0, 1, 'APAS Chile · Gerencia de Calidad · ' + title, 1)}</row>`);
+  out.push(`<row r="2">${c(0, 2, bInfo().join('   ·   '), 2)}</row>`);
+  out.push(`<row r="3">${c(0, 3, `Emitido: ${fmt(HOY)}   ·   Registros: ${rows.length}   ·   Días remanentes = próxima calibración − fecha de emisión   ·   Fuente: ${D.fuente} + cambios registrados en la app`, 2)}</row>`);
+  out.push(`<row r="4">${c(0, 4, 'Leyenda:', 2)}${c(1, 4, '> 90 días', 15)}${c(2, 4, '31–90 días', 16)}${c(3, 4, '0–30 días', 17)}${c(4, 4, 'Vencida', 18)}</row>`);
+  merges.push(`A1:${last}1`, `A2:${last}2`, `A3:${last}3`);
+  out.push(`<row r="${HR}" ht="30" customHeight="1">${head.map((h, k) => c(k, HR, h, 3)).join('')}</row>`);
+  rows.forEach((i, n) => {
+    const r = HR + 1 + n, cells = [c(0, r, n + 1, 10)];
+    cols.forEach((col, k) => {
+      const v = cv(col, i), st = dayCls(i._days);
+      if (col.days) cells.push(i._days == null ? c(k + 1, r, '', 10) : c(k + 1, r, i._days, SN[st]));
+      else if (col.date) cells.push(parseD(v) ? c(k + 1, r, serial(v), col.k === 'next' ? SD[st] : 5) : c(k + 1, r, v, 10));
+      else if (col.k === 'st') cells.push(c(k + 1, r, v, v === 'SERV' ? 20 : v === 'NO SERV' ? 21 : 10));
+      else cells.push(c(k + 1, r, v, col.wrap ? 19 : 4));
+    });
+    out.push(`<row r="${r}">${cells.join('')}</row>`);
+  });
+  const lastRow = Math.max(HR + rows.length, HR);
+  const sheet = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+<sheetPr><pageSetUpPr fitToPage="1"/></sheetPr><sheetViews><sheetView workbookViewId="0" showGridLines="0"><pane ySplit="${HR}" topLeftCell="A${HR + 1}" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>
+<cols>${widths.map((w, k) => `<col min="${k + 1}" max="${k + 1}" width="${w}" customWidth="1"/>`).join('')}</cols>
+<sheetData>${out.join('')}</sheetData><autoFilter ref="A${HR}:${last}${lastRow}"/>
+<mergeCells count="${merges.length}">${merges.map(m => `<mergeCell ref="${m}"/>`).join('')}</mergeCells>
+<pageMargins left="0.4" right="0.4" top="0.5" bottom="0.5" header="0.3" footer="0.3"/><pageSetup orientation="landscape" paperSize="9" fitToWidth="1" fitToHeight="0"/>
+<headerFooter><oddFooter>&amp;LGerencia de Calidad · Control de Herramientas&amp;RPágina &amp;P de &amp;N</oddFooter></headerFooter></worksheet>`;
+  const wb = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Listado" sheetId="1" r:id="rId1"/></sheets>
+<definedNames><definedName name="_xlnm._FilterDatabase" localSheetId="0" hidden="1">Listado!$A$${HR}:$${last}$${lastRow}</definedName><definedName name="_xlnm.Print_Titles" localSheetId="0">Listado!$${HR}:$${HR}</definedName></definedNames></workbook>`;
+  const enc = new TextEncoder();
+  return zip([
+    {name:'[Content_Types].xml', data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/></Types>`)},
+    {name:'_rels/.rels', data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`)},
+    {name:'xl/workbook.xml', data:enc.encode(wb)},
+    {name:'xl/_rels/workbook.xml.rels', data:enc.encode(`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`)},
+    {name:'xl/styles.xml', data:enc.encode(STYLES)},
+    {name:'xl/worksheets/sheet1.xml', data:enc.encode(sheet)},
+  ]);
+}
+async function exportXlsx(title, cols, rows){
+  const msg = (t, err) => { const m = $('#pvMsg') || $('#bMsg'); if (m) m.innerHTML = `<div class="msg ${err ? 'err' : ''}">${esc(t)}</div>`; };
+  const bytes = buildXlsx(title, cols, rows);
+  const slug = title.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9]+/g, '_').replace(/^_|_$/g, '').slice(0, 60) || 'Listado';
+  const filename = `${slug}_${HOY}.xlsx`;
+  const blob = new Blob([bytes], {type:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'});
+  try {
+    if (RT.dl){ await RT.dl.save({filename, data:blob}); msg(`Excel generado: ${filename} (${rows.length} filas).`); }
+    else if (!window.claude){ const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = filename; a.click(); msg(`Excel generado: ${filename}.`); }
+    else msg('La descarga no está disponible en esta vista. Abre la página directamente en claude.ai e inténtalo de nuevo.', true);
+  } catch(e){ msg(e && e.code === 'declined' ? 'Descarga cancelada.' : 'No se completó la descarga' + (e && e.message ? `: ${e.message}` : '.'), true); }
+}
+
+// ================= GANTT =================
+const G = {m:6, venc:false, ns:false, q:'', ctype:'', cust:''};
+function renderGantt(){
+  const el = $('#v-vencimientos');
+  if (!el.firstChild){
+    el.innerHTML = `<div class="toolbar"><input type="search" id="gQ" placeholder="Buscar P/N, ID, descripción…" aria-label="Buscar">
+      <select id="gM" aria-label="Horizonte"><option value="1">1 mes</option><option value="3">3 meses</option><option value="6" selected>6 meses</option></select>
+      <select id="gT" aria-label="Tipo de calibración"><option value="">Calibración: todas</option><option>Interna</option><option>Externa</option><option>Sin proveedor</option></select>
+      <select id="gC" aria-label="Custodia"><option value="">Custodia: todas</option>${CUST_OPTS.map(o => `<option>${o}</option>`).join('')}</select>
+      <label class="chk"><input type="checkbox" id="gV"> Incluir vencidas</label><label class="chk"><input type="checkbox" id="gN"> Incluir no servibles</label><span class="count" id="gCnt"></span></div>
+      <div class="mstrip" id="gStrip"></div><div class="gwrap"><div class="gscroll" id="gBody"></div></div>
+      <p class="hint" style="margin-top:8px">La barra va desde la última calibración (o desde hoy) hasta el vencimiento; la línea azul es hoy. Barras rayadas = en calibración. Haz clic en una fila para abrir su ficha.</p>`;
+    $('#gQ').oninput = e => { G.q = e.target.value; gDraw(); };
+    $('#gM').onchange = e => { G.m = +e.target.value; gDraw(); };
+    $('#gT').onchange = e => { G.ctype = e.target.value; gDraw(); };
+    $('#gC').onchange = e => { G.cust = e.target.value; gDraw(); };
+    $('#gV').onchange = e => { G.venc = e.target.checked; gDraw(); };
+    $('#gN').onchange = e => { G.ns = e.target.checked; gDraw(); };
+    $('#gBody').addEventListener('click', e => { const r = e.target.closest('[data-k]'); if (r) openFicha(r.dataset.k); });
+  }
+  gDraw();
+}
+function gDraw(){
+  const end = addMonths(TODAY, G.m), span = (end - TODAY) / 86400000, maxD = Math.round(span);
+  const toks = G.q.toLowerCase().split(/\s+/).filter(Boolean);
+  const rows = CAL.filter(i => i._days != null && i._days <= maxD && (G.venc || i._days >= 0) && (G.ns || i.st === 'SERV') && (!G.ctype || i._ctype === G.ctype) && (!G.cust || i._cust === G.cust) && toks.every(t => i._txt.includes(t)))
+    .sort((a, b) => a._days - b._days || String(a.id).localeCompare(String(b.id), 'es', {numeric:true}));
+  const pos = d => Math.max(0, Math.min(100, ((d - TODAY) / 86400000) / span * 100));
+  // month ticks
+  const ticks = []; let t = new Date(TODAY.getFullYear(), TODAY.getMonth() + 1, 1);
+  while (t <= end){ ticks.push(t); t = new Date(t.getFullYear(), t.getMonth() + 1, 1); }
+  if (G.m === 1){ ticks.length = 0; for (let d = 7; d < span; d += 7) ticks.push(new Date(TODAY.getFullYear(), TODAY.getMonth(), TODAY.getDate() + d)); }
+  const tLab = d => G.m === 1 ? `${d.getDate()} ${MES[d.getMonth()]}` : `${MES[d.getMonth()]} ${String(d.getFullYear()).slice(2)}`;
+  // month strip
+  const months = []; for (let k = 0; k < G.m; k++){ const a = addMonths(TODAY, k), b = addMonths(TODAY, k + 1); months.push({h: k === 0 ? 'Próximos 30 días' : `${fmt(isoOf(a)).slice(0, 5)} – ${fmt(isoOf(b)).slice(0, 5)}`, n: rows.filter(i => { const d = parseD(i.next); return d >= a && d < b; }).length, c: k === 0 ? 'soon' : k < 3 ? 'warn' : 'ok'}); }
+  const nv = rows.filter(i => i._days < 0).length;
+  $('#gStrip').innerHTML = (G.venc ? `<div class="kpi" style="--c:var(--bad);cursor:default"><b>${nv}</b><span>Vencidas</span></div>` : '') + months.map(m => `<div class="kpi" style="--c:${COLORS[m.c]};cursor:default"><b>${m.n}</b><span>${m.h}</span></div>`).join('');
+  $('#gCnt').textContent = `${rows.length} herramientas`;
+  const grid = ticks.map(d => `<i class="grid-l" style="left:${pos(d)}%"></i>`).join('') + `<i class="today" style="left:0"></i>`;
+  $('#gBody').innerHTML = `<div class="ghead"><div>Herramienta</div><div class="gaxis">${ticks.map(d => `<span style="left:${pos(d)}%">${tLab(d)}</span>`).join('')}<span style="left:0;border-left:2px solid var(--accent2);color:var(--accent2)">Hoy</span></div><div style="text-align:right">Días</div></div>`
+    + (rows.map(i => {
+      const c = COLORS[dayCls(i._days)], dd = parseD(i.next), ls = parseD(i.last);
+      const l = ls && ls > TODAY ? pos(ls) : 0, r = pos(dd);
+      return `<div class="grow" data-k="${esc(i.k)}" title="${esc(`${i.id || ''} ${i.pn} · vence ${fmt(i.next)}`)}"><div class="glab"><b class="mono">${esc(i.id || '—')}</b> · <span class="mono">${esc(i.pn)}</span><small>${esc(i.desc || '')} · ${esc(i.loc || '')}</small></div>
+        <div class="gtrack">${grid}${i._days >= 0 ? `<i class="bar ${i._cust === 'En calibración' ? 'out' : ''}" style="--c:${c};left:${l}%;width:${Math.max(r - l, .6)}%"></i>` : ''}<i class="due" style="--c:${c};left:${i._days < 0 ? 0.4 : r}%"></i></div>
+        <div class="gdays" style="color:${c}">${i._days < 0 ? i._days : i._days}</div></div>`;
+    }).join('') || '<div class="empty">No hay calibraciones que venzan en este horizonte con los filtros elegidos.</div>');
+}
+
+// ================= boot =================
+function setWho(){
+  $('#whoRole').textContent = !window.claude ? 'Vista local' : !RT.ready ? 'Conectando…' : !RT.db ? 'Solo lectura · sin base compartida' : RT.canWrite ? 'Edición habilitada' : 'Solo lectura';
+  const s = $('#whoSync'); s.hidden = !(RT.err || (RT.db && !RT.loaded)); s.textContent = RT.err || 'Cargando cambios…';
+}
+$('#foot').innerHTML = `Fuente: ${esc(D.fuente)} (hojas Her Cal, Her No Cal, Mant Prevent, Control Software y Location Control) + cambios registrados en esta app. Días remanentes calculados con la fecha de hoy (${fmt(HOY)}). Las intercambiables iniciales vienen de la columna “Alternative Part” y quedan como Full int.`;
+rebuild(); buildRels(); route(); setWho();
+(async () => {
+  if (!window.claude){ RT.ready = true; setWho(); return; }
+  try { RT.user = await window.claude.use('user'); } catch(e){}
+  try { RT.db = await window.claude.use('db'); } catch(e){}
+  try { RT.dl = await window.claude.use('downloads'); } catch(e){}
+  try { RT.uid = RT.user && RT.user.id ? await RT.user.id() : null; } catch(e){}
+  let can = null; try { can = RT.user ? await RT.user.can('data.write') : null; } catch(e){}
+  RT.canWrite = !!RT.db && can !== false;
+  RT.ready = true; setWho();
+  if (OPEN.k) renderFicha();
+  if (!RT.db) return;
+  const timer = setTimeout(() => { RT.err = 'No se pudieron cargar los cambios todavía; reintentando…'; setWho(); }, 10000);
+  let gotE = false, gotR = false;
+  const done = m => { if (!m.fromCache){ clearTimeout(timer); RT.err = null; } RT.loaded = gotE && gotR; setWho(); };
+  RT.db.collection('edits').onSnapshot(s => { EDITS.clear(); s.docs.forEach(d => EDITS.set(d.id, d.data())); gotE = true; done(s.metadata); refreshAll(); resolveNames(s.docs.map(d => d.data().custBy)); },
+    e => { clearTimeout(timer); RT.err = 'No se pudieron cargar los cambios (' + (e && e.code || 'error') + ').'; setWho(); });
+  RT.db.collection('rel').onSnapshot(s => { RELDB.clear(); s.docs.forEach(d => RELDB.set(d.id, d.data())); gotR = true; done(s.metadata); refreshAll(); },
+    e => { clearTimeout(timer); RT.err = 'No se pudieron cargar las intercambiables (' + (e && e.code || 'error') + ').'; setWho(); });
+})();
+document.addEventListener('keydown', e => { if (e.key === 'Escape'){ if ($('#mdl')) $('#modalHost').innerHTML = ''; else if ($('#ov') || $('#pv')) closeFicha(); } });
+</script>
