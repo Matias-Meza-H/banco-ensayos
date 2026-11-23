@@ -487,6 +487,19 @@ function renderExpList(){
     $('#catQ').oninput = go; $('#catQ').focus(); $('#catX').onclick = () => { $('#eNewWrap').innerHTML = ''; renderExpList(); };
     $('#catR').onclick = e => { const d = e.target.closest('[data-cat]'); if (d) openUpdateExp(GROUPS.find(g => g.k === d.dataset.cat)); }; };
 }
+// ===================== vínculo por P/N con Control de Herramientas (versión local, base compartida)
+const HERR = {v:new Map(), ok:false, at:0};
+async function loadHerr(force){
+  if (!force && Date.now() - HERR.at < 30000) return; HERR.at = Date.now();
+  try { const j = await (await fetch('/api/herramientas/indice')).json(); const m = new Map();
+    j.vinculos.forEach(v => { const k = v.projId + '|' + v.itemId; if (!m.has(k)) m.set(k, []); m.get(k).push(v); }); HERR.v = m; HERR.ok = true;
+    if (location.hash === '#expedientes' && eCur) renderExp(); } catch(e){}
+}
+function herrBadge(p, it){
+  const L = HERR.v.get(p.id + '|' + it.id) || [];
+  if (!L.length) return HERR.ok && it.pn && !/^w\/o/i.test(it.pn) ? '<div class="log">🔧 Sin coincidencia de P/N en el maestro de herramientas</div>' : '';
+  return L.map(v => `<div class="log">🔧 Maestro de herramientas · P/N ${esc(v.pn)}: ${v.cal ? `${v.cal} calibrable(s), <b>${v.disp} disponible(s) en APAS</b>${v.enCal ? `, ${v.enCal} en calibración` : ''}` : ''}${v.nc ? `${v.cal ? ' · ' : ''}${v.nc} no calibrable(s)` : ''}${v.intercambiables.length ? ` · intercambiables en maestro: ${esc(v.intercambiables.map(a => a.pn).join(', '))}` : ''} <a class="lnk" target="_blank" href="/herramientas/?q=${encodeURIComponent(v.pn)}#${v.cal ? 'calibrables' : 'no-calibrables'}">ver ↗</a></div>`).join('');
+}
 function projWarnings(p){ const out = []; for (const s of p.sections || []) if (s.key) for (const it of s.items) warnings(p, s, it).forEach(w => out.push([s, it, w])); return out; }
 $('#eF').innerHTML = '<option value="">Todos</option><option value="abiertos">En proceso (no aprobados)</option><option value="aprobados">Aprobados / actualización</option><option>Componente</option><option>Aeronave</option><option>Motor / taller</option><option value="Certificación extranjera">Autoridad</option>';
 $('#eQ').oninput = renderExpList; $('#eF').onchange = renderExpList;
@@ -578,6 +591,7 @@ function renderExp(){
     const rows = S2.items.map((it, ii) => { const w = warnings(p, S2, it);
       return `<tr><td style="min-width:220px"><b>${esc(itemLabel(S2, it))}</b>
           ${S2.key === 'tools' ? `<div class="log">Logística: <b>${esc(it.logistica || 'Pendiente')}</b>${it.qtyReq != null ? ` · requerido ${esc(it.qtyReq)} · obtenido ${esc(it.qtyObt ?? '—')}` : ''}${it.uso ? ` · ${esc(it.uso)}` : ''}</div>` : ''}
+          ${S2.key === 'tools' || S2.key === 'toolsTask' ? herrBadge(p, it) : ''}
           ${it.taller && S2.key !== 'tools' ? `<div class="log">Planilla: ${esc(it.taller)}${it.area ? ' · ' + esc(it.area) : ''}</div>` : ''}
           ${commentsHtml(it, si, ii, ad)}
           ${w.length ? `<div class="warn">${w.map(x => `⚠ ${esc(x)}`).join('<br>')}</div>` : ''}</td>
@@ -1327,12 +1341,14 @@ function render(){
   else if (v === 'capacidades'){ renderCapacidades(); if (ib && capMode === 'proy') $('#capBody').insertAdjacentHTML('afterbegin', ib); }
   else if (v === 'carga'){ const ae = document.activeElement; const typing = ae && $('#v-carga').contains(ae) && ae.tagName === 'INPUT' && ['text','search','date',''].includes(ae.type); if (!typing && !$('#v-carga .pform') && !$('#v-carga .evform')) renderCarga(); }
   else if (v === 'informes') renderInformes();
-  else { renderExpList(); const ae = document.activeElement; const typing = ae && $('#eMain').contains(ae) && (ae.tagName === 'TEXTAREA' || (ae.tagName === 'INPUT' && ['text','search','date','number',''].includes(ae.type))); if (!typing && !$('#eMain .box #iT')) renderExp(); }
+  else { loadHerr(); renderExpList(); const ae = document.activeElement; const typing = ae && $('#eMain').contains(ae) && (ae.tagName === 'TEXTAREA' || (ae.tagName === 'INPUT' && ['text','search','date','number',''].includes(ae.type))); if (!typing && !$('#eMain .box #iT')) renderExp(); }
   if (curDrawer && $('#ov').classList.contains('open') && !$('#edBox')) { curDrawer[0] === 'a' ? openArticle(curDrawer[1]) : openProject(curDrawer[1]); }
 }
 const route = render;
 window.addEventListener('hashchange', render);
-$('#foot').textContent = `Fuentes: FAA Capability Lists APAY048E (Accessory Rev ${S.lists.Accessory.rev}, Airframe Rev ${S.lists.Airframe.rev}, Radio Rev ${S.lists.Radio.rev}, Emergency Equipment ${S.lists['Emergency Equipment'].rev}) · DGAC Lista de Capacidad CMA 655 Rev ${S.dgacList.rev} (${fmt(S.dgacList.date)}) · Seguimiento Trabajos Capacidades v2. · DEMO Ver. ${APP_VER}`;
+$('#foot').textContent = `Fuentes: FAA Capability Lists APAY048E (Accessory Rev ${S.lists.Accessory.rev}, Airframe Rev ${S.lists.Airframe.rev}, Radio Rev ${S.lists.Radio.rev}, Emergency Equipment ${S.lists['Emergency Equipment'].rev}) · DGAC Lista de Capacidad CMA 655 Rev ${S.dgacList.rev} (${fmt(S.dgacList.date)}) · Seguimiento Trabajos Capacidades v2. · Ver. ${APP_VER} (local)`;
 (async () => { if (window.claude) { try { const u = await window.claude.use('user'); RT.myId = u ? await u.id() : null; } catch(e){} } })();
 initSession();
+try { const op = localStorage.getItem('apas_open_proj'); if (op){ eCur = op; localStorage.removeItem('apas_open_proj'); } } catch(e){}
+loadHerr(true);
 render();

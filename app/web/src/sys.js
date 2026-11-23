@@ -1,30 +1,14 @@
 
 // ===================== SISTEMA · ingreso, usuarios, registro, respaldo, compresión, autoridades, versión
-const APP_VER = '01.03.02';
-const CHANGELOG = [
-  ['01.03.02', '2026-11-16', 'Datos: Sistema › Exportar todo: un .zip con datos_completos.json (fuente exacta), datos_completos.xlsx (una hoja por entidad), todos los archivos adjuntos y un manifiesto con conteos y CRC32, para migrar la plataforma a Claude Code.'],
-  ['01.03.01', '2026-11-13', 'Evidencias: cada sección del expediente muestra cuántos datos leídos esperan confirmación, con acceso directo a la revisión.'],
-  ['01.03.00', '2026-11-13', 'Evidencias: una sola entrada “Carga y lectura de documentos” por expediente: se sube cualquier documento, Claude lo lee (texto o escaneo) y propone datos generales, ítems nuevos y cambios en todas las secciones; nada se aplica sin confirmar campo por campo, con avisos de inconsistencias (revisión menor, herramienta en cotización vs. disponible). Herramientas con campo “Disponible en CMA/MRO”. Generación del formulario QC-020 (Tablas A y B) desde el expediente.'],
-  ['01.02.01', '2026-11-12', 'Accesos: modo desarrollo protegido (solo el propietario escribe datos y archivos; quienes reciban acceso solo ven), sello “🤖 Cargado vía Claude” en documentos subidos desde un chat, y estado de protección en la auditoría.'],
-  ['01.02.00', '2026-11-12', 'Accesos: corrección de la pestaña Bases (no guardaba agregados ni descripciones de cargo), Enter para agregar y aviso al guardar. Evidencias: espacio para la autoevaluación firmada en PDF y lectura con Claude que propone las respuestas de la tabla QC-021 para revisar antes de aplicar; carga de la presentación FAA del ELT (13 documentos comprimidos, aceptados).'],
-  ['01.01.01', '2026-11-12', 'Accesos: permisos por usuario (ver, editar, subir, aprobar FAA, bases, circulares, usuarios, respaldo), perfiles Administrador, Gerencia, Colaborador limitado, Visor e Invitado de 8 horas que se elimina solo; Sistema ordenado en secciones; corrección de pestañas mezcladas. Datos: fichas del personal editables, varias especialidades por persona, pestaña Bases (cargos, áreas, especialidades, niveles, tareas OJT) como listas desplegables, registro y correlativo de circulares.'],
-  ['01.00.00', '2026-11-12', 'Primera versión DEMO. Diseño: una sola plataforma (Capacidades + Personal y capacitación), ingreso con usuario y contraseña, logo y autoridades en la web y en los documentos. Accesos: usuarios internos con rol y módulos, registro de modificaciones por usuario, aprobación FAA interna y DGAC con respaldo (dual con ambas), previsualización y nuevos filtros del roster. Datos: 7 autoridades con vencimiento, respaldo automático en dos generaciones, compresión de archivos al subir.'],
-];
+const APP_VER = '02.00.00';
+const CHANGELOG = __VERSIONES__; // historial de versiones desde la base local (tabla versiones)
 const LOGO = '__LOGO__';
-const AUTHS = [
-  {id:'DGAC', pais:'Chile', aut:'DGAC', cert:'CMA #655', nac:true, sinVenc:true, det:'Centro de Mantenimiento Aeronáutico'},
-  {id:'FAA', pais:'Estados Unidos', aut:'FAA', cert:'CRS #APAY048E', det:'Certificated Repair Station'},
-  {id:'IDAC', pais:'República Dominicana', aut:'IDAC', cert:'655-4'},
-  {id:'ANAC-AR', pais:'Argentina', aut:'ANAC', cert:'TAER #1B-707'},
-  {id:'ANAC-BR', pais:'Brasil', aut:'ANAC', cert:'202601-04'},
-  {id:'UAEAC', pais:'Colombia', aut:'Aerocivil (UAEAC)', cert:'OMA #243'},
-  {id:'AFAC', pais:'México', aut:'AFAC', cert:'CO-267-24'},
-];
+const AUTHS = __AUTHS__; // 7 autoridades desde la base local (tabla autoridades)
 const BRAND_LINE = 'DGAC CMA #655 · FAA CRS #APAY048E';
 const PERMS = [['cap','Ver Capacidades'],['pers','Ver Personal y capacitación'],['cap.edit','Editar expedientes y aprobar evidencias'],['cap.upload','Subir evidencias de capacidades'],['faa','Aprobación FAA interna'],
   ['pers.edit','Editar fichas del personal'],['pers.upload','Adjuntar certificados del personal'],['pers.bases','Editar bases de personal'],['circ','Emitir y anular circulares'],['users','Administrar usuarios'],['bak','Respaldo, restauración y auditoría']];
 const PRESETS = {admin:PERMS.map(p => p[0]), gerencia:['cap','pers','faa','circ'], colaborador:['cap','pers','cap.upload','pers.upload'], visor:['cap','pers'], invitado:['cap','pers']};
-const UROLES = {admin:'Administrador', gerencia:'Gerencia', colaborador:'Colaborador limitado', visor:'Visor', invitado:'Invitado (8 horas)'};
+const UROLES = {local:'Operador local', admin:'Administrador', gerencia:'Gerencia', colaborador:'Colaborador limitado', visor:'Visor', invitado:'Invitado (8 horas)'};
 const GUEST_MS = 8 * 3600e3;
 const DEF_USERS = {}; // versión local sin cuentas: el usuario inicial y su credencial de la 01.03.02 se retiraron del código
 const SESSION = {u:null, name:null, rol:null, mods:[], perms:[], exp:null};
@@ -111,15 +95,17 @@ let loginFails = 0, loginLock = 0;
 function sessSave(){ try { SESSION.u ? sessionStorage.setItem('apas_u', SESSION.u) : sessionStorage.removeItem('apas_u'); } catch(e){} }
 function setSession(r){ { const pm = permsOf(r); Object.assign(SESSION, {u:r.id, name:r.name || r.id, rol:r.rol, perms:pm, mods:pm.filter(p => p === 'cap' || p === 'pers'), exp:r.exp || null}); } sessSave(); document.body.classList.remove('locked'); $('#login').hidden = true; paintUser(); if (!location.hash) location.hash = '#inicio'; render(); window.dispatchEvent(new Event('apas-session')); }
 function logout(){ logAct('salida', 'sesión', ''); Object.assign(SESSION, {u:null, name:null, rol:null, mods:[], perms:[], exp:null}); sessSave(); document.body.classList.add('locked'); showLogin(); }
-function paintUser(){ const el = $('#userBox'); if (!el) return; el.innerHTML = SESSION.u ? `<span class="role">${esc(SESSION.name)} · ${esc(UROLES[SESSION.rol] || SESSION.rol)}${SESSION.exp ? ' · hasta ' + new Date(SESSION.exp).toLocaleTimeString('es-CL', {hour:'2-digit', minute:'2-digit'}) : ''}${RT.ready && RT.role === 'visor' ? ' · solo lectura' : ''}</span><button class="btn sm" id="outBtn">Salir</button>` : '';
-  if ($('#outBtn')) $('#outBtn').onclick = logout; }
+function paintUser(){ const el = $('#userBox'); if (!el) return; el.innerHTML = SESSION.u ? `<span class="role" title="Nombre que queda en el registro de modificaciones">Opera: <b>${esc(SESSION.name)}</b> · versión local</span><button class="btn sm" id="outBtn">Cambiar nombre</button>` : '';
+  if ($('#outBtn')) $('#outBtn').onclick = () => { const w = document.createElement('span'); w.innerHTML = `<input id="actIn" value="${esc(SESSION.name)}" style="width:150px;padding:4px 6px;border-radius:6px;border:1px solid #cfd6de"> <button class="btn sm" id="actOk">Guardar</button>`;
+    $('#outBtn').replaceWith(w); $('#actIn').focus(); const ok = () => { const n = $('#actIn').value.trim().slice(0, 40); if (!n) return; if (window.APAS_SET_ACTOR) window.APAS_SET_ACTOR(n); logAct('cambia operador', 'sesión', `${SESSION.name} → ${n}`); Object.assign(SESSION, {u:n, name:n}); paintUser(); render(); window.dispatchEvent(new Event('apas-session')); };
+    $('#actOk').onclick = ok; $('#actIn').onkeydown = e => { if (e.key === 'Enter') ok(); }; }; }
 function showLogin(msg){
   const L = $('#login'); L.hidden = false;
   L.innerHTML = `<form class="lbox" id="lForm" autocomplete="off"><img src="${LOGO}" alt="APAS Chile" style="width:240px;max-width:80%"><h2>Plataforma de Calidad</h2>
     <div class="lsub">Capacidades · Personal y capacitación</div>
     <label>Usuario<input id="lU" autocapitalize="none" spellcheck="false"></label><label>Contraseña<input id="lP" type="password"></label>
     <div class="lerr" id="lErr">${esc(msg || '')}</div><button class="btn pri" style="width:100%;padding:10px">Ingresar</button>
-    <div class="lfoot">${BRAND_LINE}<br>DEMO Ver. ${APP_VER}</div></form>`;
+    <div class="lfoot">${BRAND_LINE}<br>Ver. ${APP_VER}</div></form>`;
   $('#lForm').onsubmit = async e => { e.preventDefault();
     if (Date.now() < loginLock){ $('#lErr').textContent = `Demasiados intentos. Espera ${Math.ceil((loginLock - Date.now())/1000)} s.`; return; }
     const u = $('#lU').value.trim().toLowerCase(), pw = $('#lP').value;
@@ -132,17 +118,20 @@ function showLogin(msg){
   setTimeout(() => $('#lU') && $('#lU').focus(), 50);
 }
 let pendSess = null;
-function initSession(){ let u = null; try { u = sessionStorage.getItem('apas_u'); } catch(e){} const r = u ? userRec(u) : null; if (r && r.activo !== false && !expired(r)) setSession(r); else { pendSess = u; showLogin(); } }
-function usersChanged(){ purgeGuests();
+// Versión local 02.00.00: sin cuentas ni contraseñas. Quien opera se identifica con un nombre (actor) que queda en el registro.
+const actorName = () => (window.APAS_ACTOR ? window.APAS_ACTOR() : 'local');
+function initSession(){ const u = actorName(); setSession({id:u, name:u, rol:'local', perms:PERMS.map(p => p[0]), activo:true});
+  let first = true; try { first = !sessionStorage.getItem('apas_in'); sessionStorage.setItem('apas_in', '1'); } catch(e){} if (first) setTimeout(() => logAct('ingreso', 'sesión', 'aplicación local'), 1500); }
+function usersChanged(){ return; /* sin cuentas en la versión local */ purgeGuests();
   if (!SESSION.u && pendSess){ const r = userRec(pendSess); pendSess = null; if (r && r.activo !== false && !expired(r)) setSession(r); return; }
   if (SESSION.u){ const r = userRec(SESSION.u); if (!r || r.activo === false || expired(r)) logout(); else { const pm = permsOf(r); if (String(pm) !== String(SESSION.perms) || r.rol !== SESSION.rol){ Object.assign(SESSION, {rol:r.rol, perms:pm, mods:pm.filter(p => p === 'cap' || p === 'pers'), name:r.name || r.id}); paintUser(); render(); window.dispatchEvent(new Event('apas-session')); } } } }
-function purgeGuests(){ if (RT.role !== 'admin' || !RT.db) return; store.users.forEach(u => { if (expired(u) && !u._purging){ u._purging = true; writeDoc('users/' + u.id, null, 'del').catch(() => {}); } }); }
+function purgeGuests(){ return; if (RT.role !== 'admin' || !RT.db) return; store.users.forEach(u => { if (expired(u) && !u._purging){ u._purging = true; writeDoc('users/' + u.id, null, 'del').catch(() => {}); } }); }
 setInterval(() => { if (SESSION.exp && Date.now() > new Date(SESSION.exp).getTime()){ logout(); showLogin('Tu acceso de invitado terminó.'); } purgeGuests(); }, 60000);
 
 // ---------- módulos
 function shell(mod){
   const ok = m => SESSION.mods.includes(m);
-  document.querySelectorAll('nav.mods a').forEach(a => { a.classList.toggle('on', a.dataset.m === mod); a.hidden = a.dataset.m !== 'sys' && !ok(a.dataset.m); });
+  document.querySelectorAll('nav.mods a').forEach(a => { a.classList.toggle('on', a.dataset.m === mod); a.hidden = a.dataset.m !== 'sys' && a.dataset.m !== 'ext' && !ok(a.dataset.m); });
   $('nav.views').hidden = mod !== 'cap'; $('#persHost').hidden = mod !== 'pers'; $('#v-sistema').hidden = mod !== 'sys'; $('#foot').hidden = mod !== 'cap';
 }
 function autStrip(){ return `<div class="astrip">${AUTHS.map(a => `<span class="ach ${a.nac ? 'nac' : ''}"><b>${esc(a.aut)}</b> ${esc(a.pais)}<small>${esc(a.cert)}</small></span>`).join('')}</div>`; }
@@ -234,11 +223,11 @@ function auditSys(){
   const A = store.bak.get('A_meta'), B = store.bak.get('B_meta');
   !A ? wr('Aún no hay respaldo', 'Se crea solo al entrar como administrador') : (Date.now() - new Date(A.at) > 4 * 86400e3 ? wr('Último respaldo con más de 4 días', fmt(A.at.slice(0,10))) : ok('Respaldo al día', `${fmt(A.at.slice(0,10))} · ${(A.bytes/1024).toFixed(0)} KB${B ? ' · generación anterior: ' + fmt(B.at.slice(0,10)) : ' · aún sin generación anterior'}`));
   if (A && !readBak('A')) bad('El último respaldo no se puede leer', 'Genera uno nuevo');
-  !store.users.get('mmeza')?.hash ? wr('El usuario inicial usa la contraseña de fábrica', 'Cámbiala en Usuarios antes de compartir la página') : ok('Usuario inicial con contraseña propia', '');
   const big = ev.filter(e => (e.sizeBytes || 0) > 3 * 1048576); big.length ? wr(`${big.length} archivo(s) pesan más de 3 MB`, big.slice(0,3).map(e => `${e.filename} (${(e.sizeBytes/1048576).toFixed(1)} MB)`).join(', ')) : ok('Sin archivos pesados (> 3 MB)', '');
   const venc = AUTHS.filter(a => !a.sinVenc && !store.cfg.get('aut')?.venc?.[a.id]); venc.length ? wr(`${venc.length} autoridad(es) sin vencimiento registrado`, venc.map(a => a.aut + ' ' + a.pais).join(', ')) : ok('Vencimientos de autoridades registrados', '');
-  RT.role === 'admin' ? ok('Permiso de la plataforma: propietario (puede escribir)', '') : wr('Permiso de la plataforma: ' + RT.role, 'Con cuenta personal, las personas invitadas solo pueden ver');
-  ok('Modo desarrollo protegido', 'Solo el propietario escribe datos y archivos. Quien reciba la página como “Puede ver” no puede modificarla; no invites a nadie como “Puede editar”.');
+  ok('Aplicación local sin cuentas', `Servidor solo en este equipo (127.0.0.1). Opera: ${SESSION.name}. Cada escritura queda en el registro con ese nombre.`);
+  (window.APAS_LOCAL && window.APAS_LOCAL.claude && window.APAS_LOCAL.claude.disponible) ? ok('Lectura con Claude disponible', 'API de Anthropic · modelo ' + window.APAS_LOCAL.claude.modelo) : wr('Lectura con Claude no disponible en la web', (window.APAS_LOCAL && window.APAS_LOCAL.claude && window.APAS_LOCAL.claude.motivo || '') + ' Alternativa: pedir la lectura a Claude Code (ver README).');
+  const huerf = [...store.rev.keys()].filter(k => !store.evid.has(k)); if (huerf.length) wr(`${huerf.length} revisión(es) sin evidencia`, 'Quedaron de evidencias eliminadas; se conservan como historial: ' + huerf.join(', '));
   const viaC = ev.filter(e => e.via === 'claude' || /chat/i.test(e.ruta || '')).length; if (viaC) ok(`${viaC} documento(s) cargados vía Claude desde un chat`, 'Marcados con el sello 🤖 en el expediente');
   return out;
 }
@@ -254,15 +243,22 @@ let sysLogU = '', sysAudit = null, sysTab = 'version', circFile = null;
 function renderSys(force){
   const el = $('#v-sistema'), ae = document.activeElement; if (!force && ((ae && el.contains(ae) && /INPUT|SELECT|TEXTAREA/.test(ae.tagName) && ae.type !== 'checkbox') || [...el.querySelectorAll('input:not([type=checkbox]):not([type=date]),textarea')].some(i => i.value))) return;
   const W = RT.role === 'admin', cu = W && can('users'), cb = W && can('bak'), cc = W && can('circ');
-  const tabs = [['circ','Circulares y documentos'], ['usuarios','Usuarios y permisos'], ...(cu || cb ? [['registro','Registro de modificaciones']] : []), ...(cb ? [['respaldo','Respaldo'], ['exportar','Exportar todo'], ['auditoria','Auditoría']] : []), ['version','Versión']];
+  const tabs = [['circ','Circulares y documentos'], ['usuarios','Accesos y permisos'], ...(cu || cb ? [['registro','Registro de modificaciones']] : []), ...(cb ? [['respaldo','Respaldo'], ['exportar','Exportar todo'], ['auditoria','Auditoría']] : []), ['version','Versión']];
   if (!tabs.some(t => t[0] === sysTab)) sysTab = 'version';
   const A = store.bak.get('A_meta'), B = store.bak.get('B_meta'), days = store.cfg.get('sys')?.bakDays || 3;
   const mb = v => (v / 1048576).toFixed(1) + ' MB';
   let body = '';
-  if (sysTab === 'version') body = `<div class="box"><h3>Versión ${chip('DEMO Ver. ' + APP_VER, 's-info')}</h3>
+  if (sysTab === 'version') body = `<div class="box"><h3>Versión ${chip('Ver. ' + APP_VER + ' · local', 's-info')}</h3>
     <div class="hint">Numeración <b>DISEÑO . ACCESOS . DATOS</b> — 1.º: versión web, diseño, método de ingreso y presentación · 2.º: accesos, mejoras dentro de las páginas, estructura interna, evidencias y visualización · 3.º: bancos de datos (cursos, personas, listas, nuevos tipos de evidencia). Al subir un número, los de su derecha vuelven a 00.</div>
     <table class="items"><thead><tr><th>Versión</th><th>Fecha</th><th>Cambios</th></tr></thead><tbody>${CHANGELOG.map(c => `<tr><td><b>${c[0]}</b></td><td style="white-space:nowrap">${fmt(c[1])}</td><td>${esc(c[2])}</td></tr>`).join('')}</tbody></table></div>`;
   if (sysTab === 'usuarios'){
+    body = `<div class="box"><h3>Accesos y permisos ${chip('Versión local sin cuentas', 's-info')}</h3>
+    <div class="hint">Esta versión corre en un equipo local (servidor en 127.0.0.1) y <b>no tiene cuentas ni contraseñas</b>. Quien opera se identifica con su nombre (arriba a la derecha, “Cambiar nombre”); ese nombre queda en cada línea del registro de modificaciones. Lo que carga Claude desde la terminal queda con el actor <b>claude (Code)</b> y el sello 🤖.</div>
+    <h3 style="margin-top:14px">Modelo de permisos (documentado para cuando se agreguen cuentas)</h3>
+    <div class="hint">Los permisos se asignan <b>por usuario, nunca por cargo</b>: cada persona recibe solo los permisos marcados para ella. Los perfiles (Administrador, Gerencia, Colaborador limitado, Visor, Invitado de 8 horas) son solo puntos de partida para marcar permisos. Detalle en app/README.md › Permisos.</div>
+    <table class="items"><thead><tr><th>Permiso</th><th>Qué habilita</th></tr></thead><tbody>${PERMS.map(([k, l]) => `<tr><td><b>${esc(k)}</b></td><td>${esc(l)}</td></tr>`).join('')}</tbody></table></div>`;
+  }
+  if (sysTab === 'usuarios_original'){
     const pchk = (sel, dis) => PERMS.map(([k,l]) => `<label class="ynr" style="min-width:250px"><input type="checkbox" data-pm="${k}" ${sel.includes(k) ? 'checked' : ''} ${dis ? 'disabled' : ''}> ${esc(l)}</label>`).join('');
     body = `<div class="box"><h3>Usuarios y permisos</h3>
     <div class="hint">Cada usuario tiene un perfil de partida y permisos que puedes marcar uno por uno. El <b>Invitado</b> dura 8 horas desde que se crea; al vencer no puede entrar y su cuenta se elimina sola. Con tu cuenta personal de Claude, las personas que invites a la página solo pueden ver, tengan el permiso que tengan aquí.</div>

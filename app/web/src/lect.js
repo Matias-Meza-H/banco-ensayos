@@ -184,6 +184,7 @@ async function buildQC020(p){
     C('TOOLS, FIXTURES, EQUIPMENT AND MATERIALS EQUIVALENCY SUMMARY', M, CW, Hh - 40, HB, 12);
     T('FAA CRS# APAY048E', M, Hh - 60, HB, 8); T('DGAC CMA 655', M, Hh - 71, HB, 8);
     const {img} = await pdfLogo(doc), lw = 120, lh = lw * img.height / img.width; pg.drawImage(img, {x:W - M - lw, y:Hh - 30 - lh, width:lw, height:lh});
+    { const bl = pdfSafe(BRAND_LINE); pg.drawText(bl, {x:W - M - H.widthOfTextAtSize(bl, 6.5), y:Hh - 30 - lh - 9, size:6.5, font:H, color:INK}); } // regla 2: línea de marca bajo el logo
     T('Form QC-020, Rv. 1, Date: 08-07-2024', M, 22, F, 7.5); T('Page ' + pn, W - M - 30, 22, F, 7.5); y = Hh - 86; };
   const rowsTable = async (cols, rows, title, headH = 24) => {
     const head = async () => { box(M, y - 16, CW, 16, GREY); C(title, M, CW, y - 11.5, HB, 9); y -= 16; let x = M;

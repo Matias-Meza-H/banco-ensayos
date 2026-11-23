@@ -12,3 +12,5 @@ python3 build.py .                                              # inyecta data.j
 Los cambios hechos en la app (custodia, datos editados, intercambiables, historial) viven en la base de datos del artifact
 (colecciones `edits`, `rel`, `log`) y se aplican encima de los datos del Excel, identificados por la clave `k`
 (`C-<ID>` calibrables, `M-<n>` mantención preventiva, `N-<ACH>` no calibrables).
+
+> **Nota (2026-11-23):** Control de Herramientas también corre ahora dentro de la aplicación local `app/`, con la misma base que la Plataforma de Calidad y vinculado por P/N con los expedientes (`/herramientas/`). Ver `app/README.md`. Esta carpeta conserva la versión publicada como artefacto.

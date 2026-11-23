@@ -1,0 +1,5 @@
+# El servidor y la importación usan solo la biblioteca estándar de Python 3.10+.
+# Opcionales:
+anthropic>=2.13      # lectura con Claude vía API (opción a). Sin él, la app funciona y la lectura queda deshabilitada.
+openpyxl>=3.1        # importar el maestro de herramientas desde Inventario_de_Herramientas.xlsx y el .xlsx de la exportación por terminal
+# Pruebas: Node 18+ y Playwright (npm i -D playwright && npx playwright install chromium)

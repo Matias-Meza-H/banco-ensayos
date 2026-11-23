@@ -1,0 +1,6 @@
+# Datos reales: nunca al repositorio (personal con RUT, evidencias, respaldos)
+data/
+*.zip
+__pycache__/
+web/vendor/node_modules/
+web/dist/

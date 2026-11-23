@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Plataforma de Calidad · APAS Chile (DEMO)</title>
+<title>Plataforma de Calidad · APAS Chile</title>
 <style>
 :root{--bg:#f4f6f9;--card:#fff;--ink:#17202b;--muted:#5e6a79;--line:#e1e6ec;--accent:#173f66;--accent2:#2f6fa8;--soft:#e8f0f8;
 --ok:#1e7d4f;--ok-bg:#e3f4ea;--warn:#8a6d00;--warn-bg:#fbf3d4;--bad:#b42318;--bad-bg:#fde4e2;--na:#7a8594;--na-bg:#eef0f3;--faa:#1f5fa0;--faa-bg:#e3eefb;--dgac:#8a3b12;--dgac-bg:#fbeadf;--dual:#5b2a86;--dual-bg:#efe6f8}
@@ -174,14 +174,14 @@ body.locked > :not(#login){display:none!important}
 .aebox{border:1px dashed var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 </style>
 </head>
-<body class="locked">
-<div id="login"></div>
+<body>
+<div id="login" hidden></div>
 <header>
   <img class="hlogo" src="__LOGO__" alt="APAS Chile">
   <div><h1>Plataforma de Calidad · APAS Chile</h1><p>DGAC CMA #655 · FAA CRS #APAY048E</p></div>
   <span id="userBox" style="margin-left:auto;display:flex;gap:8px;align-items:center"></span>
 </header>
-<nav class="mods"><a href="#inicio" data-m="cap">Capacidades</a><a href="#fichas" data-m="pers">Personal y capacitación</a><a href="#sistema" data-m="sys">Sistema</a></nav>
+<nav class="mods"><a href="#inicio" data-m="cap">Capacidades</a><a href="#fichas" data-m="pers">Personal y capacitación</a><a href="#sistema" data-m="sys">Sistema</a><a href="/herramientas/" data-m="ext">Control de Herramientas ↗</a></nav>
 <nav class="views"><a href="#inicio" data-v="inicio">Inicio</a><a href="#capacidades" data-v="capacidades">Capacidades</a><a href="#expedientes" data-v="expedientes">Expedientes</a><a href="#carga" data-v="carga">Carga de evidencias</a><a href="#informes" data-v="informes">Informes</a></nav>
 <main id="v-inicio"></main>
 <main id="v-capacidades" hidden><div class="tabs" id="capTabs" style="margin-top:0"></div><div id="capBody"></div></main>

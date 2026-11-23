@@ -82,8 +82,8 @@ async function exportAll(btn){
     }
     st('Armando JSON y Excel…');
     const D = {
-      _meta:{generado:new Date().toISOString(), version:APP_VER, por:SESSION.u, plataforma:'Plataforma de Calidad · APAS Chile (DEMO)', artefacto:'dd6a27f0-b738-4584-ad17-568ab4f7879c',
-        nota:'Fuente exacta para migrar. Excluye usuarios y contraseñas de la página (la versión en Code no usa cuentas). El Excel es una vista legible; ante diferencia manda este JSON.',
+      _meta:{generado:new Date().toISOString(), version:APP_VER, por:SESSION.u, plataforma:'Plataforma de Calidad · APAS Chile (local)', artefacto:'aplicación local (Claude Code)',
+        nota:'Fuente exacta para migrar. La versión local no usa cuentas. El Excel es una vista legible; ante diferencia manda este JSON.',
         conteos:{...Object.fromEntries(EXP_COLS.map(c => [c, coll[c].length])), certs:certs.length, pers_editadas:persEd.length, personal_base:persBase ? persBase.personas.length : 0, personal_vista:persMerged.length, catalogo_entries:S.entries.length, catalogo_articles:S.articles.length, semilla_proyectos:IMPORT.length, archivos:manif.filter(m => m.archivo).length, archivos_fallidos:fail}},
       proyectos, evidencias:coll.evid, revisiones:coll.rev, lecturas:coll.lect, entrenamiento:coll.train, articulos_presentacion:coll.art, snapshots_informes:coll.snap,
       config:coll.cfg, circulares:coll.circ, registro:coll.log, certificados_personal:certs, personal_ediciones:persEd, personal_base:persBase, personal_vista_actual:persMerged,
@@ -119,7 +119,7 @@ async function exportAll(btn){
       {name:'Archivos', rows:tableOf(manif)},
       {name:'Versiones', rows:[['version','fecha','cambios'], ...CHANGELOG]}];
     const xlsx = new Uint8Array(await buildXlsxBook(sheets).arrayBuffer());
-    const leeme = `EXPORTACIÓN COMPLETA · Plataforma de Calidad APAS Chile (DEMO Ver. ${APP_VER})\nGenerada: ${D._meta.generado} por ${SESSION.u}\n\n- datos_completos.json: fuente exacta (todas las colecciones, catálogo FAA/DGAC, personal base + ediciones, semillas, autoridades, preguntas QC-021, versiones).\n- datos_completos.xlsx: vista legible (una hoja por entidad; objetos anidados en notación a.b.c; listas de objetos como JSON). Celdas > 32.000 caracteres truncadas: ${XTRUNC}.\n- archivos/: todos los adjuntos, nombrados <assetId>_<nombre>. El JSON los referencia por assetId (campo assetId, fotos[]); 'archivos' en el JSON trae ruta, bytes y CRC32 de cada uno.\n- manifiesto.json: conteos y CRC32 para verificar la importación.\n\nConteos: ${JSON.stringify(D._meta.conteos)}\n`;
+    const leeme = `EXPORTACIÓN COMPLETA · Plataforma de Calidad APAS Chile (local Ver. ${APP_VER})\nGenerada: ${D._meta.generado} por ${SESSION.u}\n\n- datos_completos.json: fuente exacta (todas las colecciones, catálogo FAA/DGAC, personal base + ediciones, semillas, autoridades, preguntas QC-021, versiones).\n- datos_completos.xlsx: vista legible (una hoja por entidad; objetos anidados en notación a.b.c; listas de objetos como JSON). Celdas > 32.000 caracteres truncadas: ${XTRUNC}.\n- archivos/: todos los adjuntos, nombrados <assetId>_<nombre>. El JSON los referencia por assetId (campo assetId, fotos[]); 'archivos' en el JSON trae ruta, bytes y CRC32 de cada uno.\n- manifiesto.json: conteos y CRC32 para verificar la importación.\n\nConteos: ${JSON.stringify(D._meta.conteos)}\n`;
     const all = [{name:'datos_completos.json', data:json}, {name:'datos_completos.xlsx', data:xlsx}, {name:'LEEME.txt', data:new TextEncoder().encode(leeme)},
       {name:'manifiesto.json', data:new TextEncoder().encode(JSON.stringify({conteos:D._meta.conteos, json_crc32:crc32(json).toString(16).padStart(8, '0'), json_bytes:json.length, xlsx_bytes:xlsx.length, archivos:manif}, null, 1))}, ...files];
     const zip = zipStore(all), name = `Exportacion_Plataforma_Calidad_APAS_${today()}_v${APP_VER}.zip`;

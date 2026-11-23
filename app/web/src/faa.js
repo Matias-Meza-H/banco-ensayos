@@ -1,43 +1,6 @@
 
 // ===================== FAA · Self-Evaluation Checklist (Form QC-021 Rev.2) · 03 + 04 · carga masiva
-const QC021 = [
-  {ch:'I', t:'Housing and Facilities.', es:'Instalaciones', sec:'infra', div:'According to current RSQCM', q:[
-    ['a','Does the facility have adequate size to house all necessary tooling, equipment, material and parts to perform the work on these items?'],
-    ['b','Do the facilities have adequate lighting, protect customer parts, materials, and units from damage, theft, and contamination, and ensure the safety of the personnel involved?'],
-    ['c','Are the storage area and work area physically separated from the workshop facilities?'],
-    ['d','Do shipping and receiving areas have adequate space, lighting, shelving, security and fire protection?'],
-    ['e',"Is there adequate and appropriate storage space to safely store customers' shipping containers and protect them from damage?"],
-    ['f','Are workshop areas clearly segregated by function?']]},
-  {ch:'II', t:'Tools and Test Equipment.', es:'Herramientas y equipos', sec:'tools', div:'See Form QC-020-Table A', q:[
-    ['a','Does the Repair Station have the equipment and tools necessary to perform the maintenance, preventive maintenance or alteration of the items listed above?'],
-    ['b','Are all test and inspection equipment and tools calibrated to a standard acceptable to the FAA?'],
-    ['c','Does the repair station have the appropriate check for Alternative Tooling /Equipment Equivalency Assessment (Form QC-020A)?']]},
-  {ch:'III', t:'Materials', es:'Materiales', sec:'mat', div:'See Form QC-020-Table B', q:[
-    ['a','Does the Repair Station have the consumables materials necessary to perform the maintenance, preventive maintenance or alteration of the items listed above?'],
-    ['b','Are the materials recommended by the manufacturer of the article or equivalent?']]},
-  {ch:'IV', t:'Technical Data.', es:'Datos técnicos', sec:'doc', div:'See record attached', q:[
-    ['a','Does the repair station have the documents and data necessary for performing maintenance, preventive maintenance, and alterations?'],
-    ['b','Does the repair station have access to the Airworthiness Directives and Service Bulletins, and can it review them to see if there is any application to these articles?'],
-    ['c','Does the repair station have instructions for continued airworthiness?'],
-    ['d','Does the article require aircraft maintenance manuals?', 'Maintenance Manuals'],
-    ['e','Does the article require component maintenance manuals?'],
-    ['f','Does the article require structural maintenance manuals?'],
-    ['g','Does the article require standard practice manuals?']]},
-  {ch:'V', t:'Process.', es:'Procesos', sec:'serv', div:'See record attached', q:[
-    ['a','Does the repair shop have the appropriate certification to perform maintenance, preventive maintenance, or modification of the items listed above?'],
-    ['b','Does the repair station have the capability to identify what maintenance, preventive maintenance, or alteration it needs to perform according to the applicable certification?'],
-    ['c','Does the repair station have the capability to perform the testing processes required by the applicable maintenance data?'],
-    ['d','Does the repair station have the capability to perform the inspection processes required by the applicable maintenance data?'],
-    ['e','Does the repair station have the capability to perform the repairs required by the applicable maintenance data?'],
-    ['f','Does the repair station have the capability to perform overhaul of the article in accordance with the applicable maintenance data?'],
-    ['g','Does the repair station have the capability to perform the Non-Destructive Testing (NDT) processes required by the applicable maintenance data?'],
-    ['h','Does the repair station have the capability to perform special processes required by the applicable maintenance data?']]},
-  {ch:'VI', t:'Trained Personnel.', es:'Personal entrenado', sec:'train', div:'See training records attached\nSee Rosters attached', q:[
-    ['a','Do the training records demonstrate that personnel assigned to perform the maintenance, preventive maintenance, or alteration of the items listed above have completed the required training?'],
-    ['b','Do the training records demonstrate that supervisory personnel are qualified to oversee the maintenance, preventive maintenance, or alteration of the items listed above?'],
-    ['c','Do the training records demonstrate that inspection personnel are qualified to perform the inspections required for the items listed above?'],
-    ['d','Do the training records demonstrate that personnel authorized to approve items for Return to Service (RTS) are qualified for that function?']]},
-];
+const QC021 = __QC021__; // 30 preguntas oficiales Form QC-021 Rev.2 desde la base local (tabla qc021_preguntas)
 const CH_LIST = QC021.map(c => c.ch);
 const CH_OF_SEC = {infra:'I', tools:'II', mat:'III', doc:'IV', serv:'V', train:'VI'};
 const SEC_OF_CH = Object.fromEntries(Object.entries(CH_OF_SEC).map(([k,v]) => [v,k]));
@@ -315,7 +278,7 @@ async function build03(p){
   const T = (s, x, yy, f=F, sz=10.5, c=INK) => pg.drawText(pdfSafe(s), {x, y:yy, font:f, size:sz, color:c});
   const box = (x, yy, w, h, fill) => pg.drawRectangle({x, y:yy, width:w, height:h, borderColor:LINE, borderWidth:0.7, color:fill});
   const head = () => { pg = doc.addPage(LT); y = LT[1] - 50;
-    T('Self-Evaluation Checklist', M, y - 18, HB, 20); logo(pg, LT[0] - M - 105, y - 10, 1); T('FAA CRS #APAY048E  ·  DGAC CMA #655', LT[0] - M - 112, y - 34, HB, 6.5);
+    T('Self-Evaluation Checklist', M, y - 18, HB, 20); logo(pg, LT[0] - M - 105, y - 10, 1); { const bl = pdfSafe(BRAND_LINE); T(bl, LT[0] - M - H.widthOfTextAtSize(bl, 6.5) - 2, y - 34, H, 6.5); } // regla 2: logo + línea de marca a la derecha del encabezado
     y -= 40; const cw = [CW*0.42, CW*0.3, CW*0.28], hdr = ['1.  Part Number','2.  Manufacturer','3.  Description'], vals = [se.hdr.pn, se.hdr.mfr, se.hdr.desc];
     const vl = vals.map((v,i) => wrap(v || '', H, 9.5, cw[i] - 8)), hh = Math.max(3, ...vl.map(l => l.length)) * 11 + 8;
     let x = M; hdr.forEach((h,i) => { box(x, y - 14, cw[i], 14); const tw = H.widthOfTextAtSize(h, 9.5); T(h, x + (cw[i]-tw)/2, y - 10.5, H, 9.5); box(x, y - 14 - hh, cw[i], hh);
