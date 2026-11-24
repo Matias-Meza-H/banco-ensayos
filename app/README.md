@@ -7,6 +7,18 @@ Aplicación web local que reúne, con una sola base de datos:
 
 No tiene cuentas ni contraseñas. Quien opera escribe su nombre arriba a la derecha (**Cambiar nombre**) y ese nombre queda en cada línea del registro de modificaciones.
 
+## Versión artefacto de claude.ai (02.01.00)
+
+La misma plataforma también está publicada como **un solo artefacto privado** de claude.ai, sin contraseña: https://claude.ai/artifact/76jeaXntnn5EwYK1AnPz5U
+
+- Tiene Capacidades, Personal y capacitación, Control de Herramientas (rutas `#h-…`) y Sistema en una sola página.
+- Lo ven solo el dueño y las personas que él invite con **Compartir**. Solo el dueño modifica datos: las reglas de la base son `write: owner`.
+- Se arma con `python3 web/build_artifact.py <datos_completos.json> <data.json de herramientas> <salida.html>`. Los datos se incrustan al armar y no se versionan.
+- Migración del 24-11-2026:
+  - 18 archivos copiados desde la plataforma 01.03.02, con sha256 idéntico.
+  - 126 documentos cargados desde la exportación verificada del 23-11 y comparados uno a uno.
+  - La página había cargado sola los 41 proyectos de la planilla inicial al abrirse vacía. Se reemplazaron por los reales, y se eliminaron la foto de avance y el respaldo hechos con esa planilla. Queda constancia en el registro (`migracion-02-01-00`).
+
 ## Puesta en marcha
 
 Requisitos: Python 3.10 o superior. Las dependencias opcionales están en `requirements.txt`.
