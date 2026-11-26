@@ -19,9 +19,10 @@ import re
 import sys
 
 W = os.path.dirname(os.path.abspath(__file__))
-APP_VER = '02.01.00'
+APP_VER = '02.02.00'
 LINE_0200 = ['02.00.00', '2026-11-23', 'Diseño: la plataforma deja de ser un artefacto de claude.ai y pasa a ser una aplicación web local (servidor propio + base SQLite), en la misma aplicación que Control de Herramientas. Accesos: sin cuentas ni contraseñas; quien opera se identifica con un nombre que queda en el registro de modificaciones (modelo de permisos por usuario documentado para el futuro). Datos: importación verificada de la exportación 01.03.02 (conteos, CRC32, integridad referencial, textos DGAC byte a byte y cálculos); lectura con Claude vía API de Anthropic (clave en el entorno) o desde Claude Code; herramientas de los expedientes vinculables por P/N al maestro de herramientas.']
-LINE_0201 = [APP_VER, '2026-11-24', 'Accesos: la plataforma vuelve a publicarse como un artefacto privado de claude.ai, ahora con todo en una sola página y sin contraseña: Capacidades, Personal y capacitación, Control de Herramientas y Sistema. Solo la ve el dueño y quienes él invite con “Compartir”; solo el dueño modifica datos. Control de Herramientas queda como módulo con su ficha vinculada por P/N a los expedientes. Datos: migración verificada de la exportación del 23-11-2026 (43 proyectos, 18 evidencias con sus archivos, 17 revisiones, lectura pendiente de P001, registro, fotos de avance, personal y catálogo).']
+LINE_0201 = ['02.01.00', '2026-11-24', 'Accesos: la plataforma vuelve a publicarse como un artefacto privado de claude.ai, ahora con todo en una sola página y sin contraseña: Capacidades, Personal y capacitación, Control de Herramientas y Sistema. Solo la ve el dueño y quienes él invite con “Compartir”; solo el dueño modifica datos. Control de Herramientas queda como módulo con su ficha vinculada por P/N a los expedientes. Datos: migración verificada de la exportación del 23-11-2026 (43 proyectos, 18 evidencias con sus archivos, 17 revisiones, lectura pendiente de P001, registro, fotos de avance, personal y catálogo).']
+LINE_0202 = [APP_VER, '2026-11-26', 'Evidencias: la ficha de cada herramienta y equipo suma “Uso común” (texto para la columna 11. USE del QC-020), etiquetas de uso (#composite, #metal, #estructura, #curado…, más etiquetas libres) y foto como evidencia física (liviana: JPEG máx. 1800 px). Se busca por #etiqueta, se filtra y se usa como criterio en Fabricación de archivos. Datos: primeras herramientas etiquetadas desde el 04 Evidences CMM 71-61-00.']
 
 
 def sub(t, old, new, n=1):
@@ -133,7 +134,7 @@ route();
     t = sub(t, '<a href="/herramientas/" data-m="ext">Control de Herramientas ↗</a>', '<a href="#h-dashboard" data-m="herr">Control de Herramientas</a>')
     t = sub(t, '<div id="persHost" hidden></div>', '<div id="persHost" hidden></div>\n<div id="herrHost" hidden></div>')
     S = {'lists': D['catalogo']['listas_faa'], 'dgacList': D['catalogo']['lista_dgac'], 'entries': D['catalogo']['entries'], 'articles': D['catalogo']['articles']}
-    versiones = [LINE_0201, LINE_0200] + D['versiones']
+    versiones = [LINE_0202, LINE_0201, LINE_0200] + D['versiones']
     shim = """<script>
 // Artefacto sin contraseña: quien opera = nombre guardado en este navegador o el nombre de la cuenta de Claude.
 window.APAS_ACTOR = () => { try { return localStorage.getItem('apas_actor') || window.__claudeName || 'propietario'; } catch(e){ return window.__claudeName || 'propietario'; } };
