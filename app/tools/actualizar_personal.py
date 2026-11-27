@@ -258,6 +258,12 @@ ausentes = [quien(p) for p in P if NR(p['rut']) not in todos]
 for r, n, ap, rut in filas_dup:
     pass
 
+# aeronaves definidas en la plataforma sin columna en la planilla (A220, A330): quedan en la ficha, vacías
+AC_PLATAFORMA = ['Airbus A319/A320/A321', 'Airbus A220', 'Airbus A330', 'Boeing 737NG', 'Boeing 737 MAX', 'Boeing 767', 'BAe146']
+for p in P:
+    if 'acAll' in p:
+        p['acAll'] = {ac: p['acAll'].get(ac, {'nivel': None, 'venc': None}) for ac in AC_PLATAFORMA} | {k: v for k, v in p['acAll'].items() if k not in AC_PLATAFORMA}
+
 fecha = val(wb['AIRCRAFT']['I3'].value)
 base['fuente'] = xlsx.split('/')[-1]
 base['actualizado'] = f"Actualizado al {'-'.join(reversed(fecha.split('-')))}   ·   Fechas = vencimiento   ·   Solo personal activo"

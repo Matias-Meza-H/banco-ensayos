@@ -413,8 +413,8 @@ function especialidad(p){
 }
 
 
-const AC_LIST = ['Airbus A319/A320/A321','Boeing 737NG','Boeing 737 MAX','Boeing 767','BAe146'];
-const AC_SHORT = {'Airbus A319/A320/A321':'A320','Boeing 737NG':'B737NG','Boeing 737 MAX':'B737MAX','Boeing 767':'B767','BAe146':'BAe146'};
+const AC_LIST = ['Airbus A319/A320/A321','Airbus A220','Airbus A330','Boeing 737NG','Boeing 737 MAX','Boeing 767','BAe146'];
+const AC_SHORT = {'Airbus A319/A320/A321':'A320','Airbus A220':'A220','Airbus A330':'A330','Boeing 737NG':'B737NG','Boeing 737 MAX':'B737MAX','Boeing 767':'B767','BAe146':'BAe146'};
 const OP_LIST = {'JetSMART Chile (JAT)':['Special Ops','MCM'],'JetSMART Argentina (JES)':['Special Ops','MCM'],'Sky Airline (SKU)':['Special Ops','MCM'],
   'Avianca (AVA)':['Policies & Procedures','Special Ops','EWIS','SFAR','Inspector','Incoming Inspection','PTL Due Date'],'DAP':['MCM','OP.ESP'],'Servicios Aéreos NG':['MCM','SMS']};
 const OP_SHORT = {'JetSMART Chile (JAT)':'JAT','JetSMART Argentina (JES)':'JES','Sky Airline (SKU)':'SKU','Avianca (AVA)':'AVA','DAP':'DAP','Servicios Aéreos NG':'NG'};
@@ -452,7 +452,7 @@ refreshSelects();
 function fillOpCourses(){ const op = $('#xOp').value; $('#xOpC').innerHTML = op ? opt('', 'Todos los cursos') + OP_LIST[op].map(c => opt(c,c)).join('') : opt('', '—'); $('#xOpC').disabled = !op; }
 fillOpCourses();
 
-const ENG = {'Airbus A319/A320/A321':['CFM56-5','V2500','LEAP-1A','PW1100'],'Boeing 737NG':['CFM56-7'],'Boeing 767':['CF6-80C2','PW4000'],'BAe146':['ALF 502']};
+const ENG = {'Airbus A319/A320/A321':['CFM56-5','V2500','LEAP-1A','PW1100'],'Airbus A220':['PW1500G'],'Airbus A330':['CF6-80E','PW4000','RR Trent 700'],'Boeing 737NG':['CFM56-7'],'Boeing 767':['CF6-80C2','PW4000'],'BAe146':['ALF 502']};
 const IND_ALL = ['MPM/RSQCM','Regulación','Factores Humanos','SMS','Familiarización','Téc. Inspección','Certificación interna','Inglés','TICA'];
 const IND_DEF = ['MPM/RSQCM','Regulación','Factores Humanos','SMS'];
 const engVal = (p, ac, m) => { const a = p.aeronaves.find(z => z.aeronave === ac), e = a && a.motores.find(z => z.motor === m); return e ? e.valor : null; };
